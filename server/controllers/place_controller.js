@@ -22,7 +22,7 @@ exports.place_detail = async (req, res, next) => {
 }; 
 
 exports.place_create_get= (req, res, next) => { 
-    res.status(200).json({ pageTitle: "Create Place"}); 
+    res.status(200).json({ pageTitle: "Creeaza Atractie"}); 
 }; 
 
 exports.place_create_post = [ 
@@ -73,8 +73,9 @@ exports.place_create_post = [
         });         
 
         if(!errors.isEmpty()) { 
-            res.status(403).send(
+            res.status(403).json(
                 {
+                    pageTitle: "Creeaza Atractie", 
                     title: place.title, 
                     description: place.description, 
                     type: place.type, 
