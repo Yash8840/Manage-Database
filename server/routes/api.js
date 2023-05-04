@@ -1,7 +1,5 @@
 const express = require("express"); 
 const router = express.Router(); 
-require("../configs/passport");  
-const passport = require("passport"); 
 
 const home_controller = require("../controllers/home_controller"); 
 const city_controller = require("../controllers/city_controller"); 
