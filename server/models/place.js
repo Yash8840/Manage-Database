@@ -8,7 +8,7 @@ const PlaceSchema = new Schema({
     photo: { type: String, minLength: 1, maxLength: 100 },
     history: { type: String, minLength: 1, maxLength: 30000 }, 
     contact: { type: String, minLength: 1, maxLength: 100 },
-    city: { type: Schema.Types.ObjectId, ref: "City" }, 
+    city: { type: String, minLength: 1 }, 
     adress: { type: String, minLength: 1 }, 
 }); 
 

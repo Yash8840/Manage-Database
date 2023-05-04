@@ -52,6 +52,7 @@ exports.place_create_post = [
         .escape(), 
     body("city")
         .trim() 
+        .optional({ checkFalsy: true })
         .escape(), 
     body("adress")
         .trim()
