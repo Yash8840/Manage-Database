@@ -1,8 +1,11 @@
 import React from "react";
+import HomePage from "../pages/Home";
 
 const App = () => { 
   return( 
-    <section className="app"> Hello </section>
+    <section className="app"> 
+      <HomePage/>
+    </section>
   )
 }; 
 
