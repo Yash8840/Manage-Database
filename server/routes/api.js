@@ -3,7 +3,33 @@ const router = express.Router();
 
 const home_controller = require("../controllers/home_controller"); 
 const city_controller = require("../controllers/city_controller"); 
-const place_controller = require("../controllers/place_controller"); 
-const road_controller = require("../controllers/road_controller"); 
+const place_controller = require("../controllers/place_controller");    
 
 router.get("/", home_controller.index); 
+
+// Place Routes
+router.get("/places/create", place_controller.place_create_get); 
+router.post("/places/create", place_controller.place_create_post); 
+
+router.get("/places/:id/update", place_controller.place_update_get); 
+router.put("/places/:id/update", place_controller.place_update_post); 
+
+router.get("/places", place_controller.place_list); 
+router.get("/places/:id", place_controller.place_detail); 
+router.delete("/places/:id", place_controller.place_delete_post); 
+
+// City Routes 
+router.get("/cities/create", city_controller.city_create_get); 
+router.post("/cities/create", city_controller.city_create_post); 
+
+router.get("/cities/:id/update", city_controller.city_update_get); 
+router.put("/cities/:id/update", city_controller.city_update_post);
+
+router.get("/cities", city_controller.city_list); 
+router.get("/cities/:id", city_controller.city_detail); 
+router.delete("/cities/:id", city_controller.city_delete_post); 
+
+// Road Routes. 
+// In work 
+
+module.exports = router; 
