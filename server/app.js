@@ -1,3 +1,5 @@
+require("dotenv").config(); 
+require('events').EventEmitter.prototype._maxListeners = 200;
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');

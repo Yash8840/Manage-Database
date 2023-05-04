@@ -1,12 +1,20 @@
 const express = require("express"); 
 const router = express.Router(); 
+require("../configs/passport");  
+const passport = require("passport"); 
 
 const home_controller = require("../controllers/home_controller"); 
 const city_controller = require("../controllers/city_controller"); 
 const place_controller = require("../controllers/place_controller");    
 const user_controller = require("../controllers/user_controller");
+const auth_controller = require("../controllers/auth_controller"); 
 
 router.get("/", home_controller.index); 
+
+//Auth 
+
+router.get("/login", auth_controller.login_get); 
+router.post("/login", auth_controller.login_post); 
 
 // Place Routes
 router.get("/places/create", place_controller.place_create_get); 
@@ -36,7 +44,7 @@ router.get("/profiles/:id/update", user_controller.user_update_get);
 router.put("/profiles/:id/update", user_controller.user_update_put);
 
 router.get("/profiles", user_controller.users_list); 
-router.get("/profiles/:id", user_controller.user_detail); 
+router.get("/profiles/:id",  user_controller.user_detail); 
 router.delete("/profiles/:id", user_controller.user_delete); 
 
 // Road Routes. 
