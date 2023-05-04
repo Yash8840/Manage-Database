@@ -1,10 +1,11 @@
 import React from "react";
 import HomePage from "../pages/Home";
+import CityForm from "../components/CityForm";
 
 const App = () => { 
   return( 
     <section className="app"> 
-      <HomePage/>
+      <CityForm /> 
     </section>
   )
 }; 
