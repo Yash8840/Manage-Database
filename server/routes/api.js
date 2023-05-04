@@ -4,6 +4,7 @@ const router = express.Router();
 const home_controller = require("../controllers/home_controller"); 
 const city_controller = require("../controllers/city_controller"); 
 const place_controller = require("../controllers/place_controller");    
+const user_controller = require("../controllers/user_controller");
 
 router.get("/", home_controller.index); 
 
@@ -28,6 +29,15 @@ router.put("/cities/:id/update", city_controller.city_update_post);
 router.get("/cities", city_controller.city_list); 
 router.get("/cities/:id", city_controller.city_detail); 
 router.delete("/cities/:id", city_controller.city_delete_post); 
+
+//Users 
+
+router.get("/profiles/:id/update", user_controller.user_update_get); 
+router.put("/profiles/:id/update", user_controller.user_update_put);
+
+router.get("/profiles", user_controller.users_list); 
+router.get("/profiles/:id", user_controller.user_detail); 
+router.delete("/profiles/:id", user_controller.user_delete); 
 
 // Road Routes. 
 // In work 
