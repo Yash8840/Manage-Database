@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
+import NavBar from "../components/NavBar";
 
 const HomePage = () => { 
     const [data, setData] = useState( {}); 
