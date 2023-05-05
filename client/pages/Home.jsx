@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
-import NavBar from "../components/NavBar";
+import City from "../components/City";
 
 const HomePage = () => { 
-    const [data, setData] = useState( {}); 
-    useEffect( () => {
-        (async () => {
-            const dataSet = await useFetch("http://localhost:3000/api/cities"); 
-            setData(dataSet); 
-         })()
-     }, [])
+    const [data, setData] = useState({});
+  
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch("http://localhost:3000/api/cities");
+            const dataSet = await response.json();
+            setData(dataSet);
+          };
+
+        fetchData(); 
+    }, []);
+
     return( 
-        <section>
-            <pre> {  JSON.stringify(data) } </pre>
+        <section className="page home-page">
+            {data.cities && <p> { JSON.stringify(data.cities) }</p> } 
+            { data.cities?.map( c => { 
+                return( 
+                    <article key = { c._id } >
+                        <City id = { c._id } title = { c.title } />
+                    </article>
+                )
+            })}
         </section>
     )
 }; 
