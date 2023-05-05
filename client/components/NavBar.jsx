@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 const NavBar = () =>  { 
-    render( 
+    return( 
         <nav></nav>
     )
 }; 

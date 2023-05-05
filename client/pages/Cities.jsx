@@ -5,7 +5,7 @@ import City from "../components/City";
 
 const Cities = () => { 
     return(
-        <section className="page cities-page"></section>
+        <section className="page cities-page">cities</section>
     )
 }; 
 

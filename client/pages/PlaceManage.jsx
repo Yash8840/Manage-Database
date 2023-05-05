@@ -6,7 +6,7 @@ import PlaceForm from "../components/PlaceForm";
 
 const PlaceManage = () => { 
     return( 
-        <section className="manage place-manage page"></section>
+        <section className="manage place-manage page">place manage</section>
     )
 }; 
 

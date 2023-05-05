@@ -4,7 +4,7 @@ import Place from "../components/Place";
 
 const Places = () =>  {
     return ( 
-        <section className="page places-page"></section>
+        <section className="page places-page">places</section>
     )
 }; 
 
