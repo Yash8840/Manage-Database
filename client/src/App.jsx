@@ -6,6 +6,8 @@ import NavBar from "../components/NavBar";
 import PlaceManage from "../pages/PlaceManage";
 import CityManage from  "../pages/CityManage"; 
 import { Routes, Route } from "react-router-dom"; 
+import PlacePage from "../pages/PlacePage";
+import CityPage from "../pages/CityPage";
 
 const App = () => { 
   return( 
@@ -19,6 +21,12 @@ const App = () => {
         {/* Manage Routes*/}
         <Route path = "/places/create" element = { <PlaceManage /> }/>
         <Route path = "/cities/create" element = { <CityManage /> } />  
+
+        {/* Detail Routes*/}
+        <Route path = "/places/:id" element = { <PlacePage />} /> 
+        <Route path = "/cities/:id" element = { <CityPage /> } /> 
+        <Route path = "/places/:id/update" element = { <PlaceManage /> } /> 
+        <Route path = "/cities/:id/update" element = { <CityManage /> } /> 
       </Routes>
     </section>
   )
