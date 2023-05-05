@@ -8,6 +8,7 @@ import CityManage from  "../pages/CityManage";
 import { Routes, Route } from "react-router-dom"; 
 import PlacePage from "../pages/PlacePage";
 import CityPage from "../pages/CityPage";
+import main from "../css/main.css"; 
 
 const App = () => { 
   return( 

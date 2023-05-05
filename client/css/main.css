@@ -1,0 +1,50 @@
+* { 
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box;
+} 
+
+/* Mains */
+body {
+    font-family: 'Roboto', sans-serif;;
+} 
+
+/* NavBar stiling */
+
+.navbar-ul { 
+    width: 100vw; 
+    display: flex; 
+
+    background-color: #293241;
+}
+
+.navbar-ul h1 { 
+    width: 40vw;
+    color: white; 
+}
+
+.navbar-element { 
+    list-style-type: none;
+    display: grid; 
+    place-content: center;
+    width: 12vw; 
+}
+
+.navbar-element:hover, .navbar-element:focus { 
+    background-color: #98C1D9;
+    border-radius: 14px;
+}
+
+.navbar-element:hover a { 
+    color: #293241; 
+}
+
+.navbar-ul h1, .navbar-element { 
+    padding: 1rem; 
+}
+
+.navbar-element a { 
+    text-decoration: none;
+    color: white; 
+    font-weight: 900;
+}
