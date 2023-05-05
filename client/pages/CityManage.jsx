@@ -6,7 +6,9 @@ import NavBar from "../components/NavBar";
 
 const CityManage = () => { 
     return( 
-        <section className="manage city-mangep page">city manage</section>
+        <section className="manage city-mangep page">
+            <CityForm/>
+        </section>
     )
 }; 
 
