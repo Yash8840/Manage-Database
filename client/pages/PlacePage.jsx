@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import fetchData from "../helpers/fetchData";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PlacePage = () => { 
     const location = useLocation(); 
+    const navigate = useNavigate(); 
     const [ data, setData ] = useState({}); 
+    const [ successDeleteMessage, setSuccessDeleteMessage ] = useState("");  
 
     useEffect (() => {
         const renderData = async () => { 
@@ -15,11 +18,34 @@ const PlacePage = () => {
 
         renderData(); 
      }, []) 
+
+    const handleDelete = async () => { 
+        try {  
+            const res = await fetch( `http://localhost:3000/api${location.pathname}`, { 
+                method: "delete", 
+                mode: "cors", 
+                body: JSON.stringify(data), 
+                headers: { 
+                    "Content-Type": "application/json", 
+                }
+            })
+
+            if(res.status !== 200) { 
+                setSuccessDeleteMessage("You have an error in your code - STATUS error."); 
+                return; 
+            }
+
+            navigate("/cities"); 
+        } catch(err) { 
+            console.log(err); 
+            setSuccessDeleteMessage("You have an error in your code."); 
+        }
+    }
     return ( 
         <section className="detail-page page">
             <h2> { data.title } </h2>
             <article className="developer">
-                <button>Sterge Locatie</button>
+                <button onClick={ handleDelete }>Sterge Locatie</button>
                 <button>Actualizeaza Locatie</button>
             </article>
 
