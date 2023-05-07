@@ -2,3 +2,6 @@
 - CLIENT: page detaill 
 - API: update place and city 
 - API: add photo system 
+
+- vector de adrese 
+- cautare atractii dupa tip

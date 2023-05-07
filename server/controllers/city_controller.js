@@ -13,13 +13,23 @@ exports.city_list = async (req, res, next) => {
 }; 
 
 exports.city_detail = async (req, res, next) => { 
-    const city = await City.findById(req.params.id).exec(); 
-    
-    if(city == null) { 
-        res.status(403); 
-    } else { 
-        res.status(200).json({ city: city}); 
-    }
+    async.waterfall({ 
+        async city () { 
+            const c = await City.findById(req.params.id).exec();
+            return c; 
+        }, 
+
+        async places () { 
+            const p = await Place.find({ city: city.title }); 
+            return p; 
+        }
+    }, (err, results) => { 
+        if(city == null) { 
+            res.status(403); 
+        } else { 
+            res.status(200).json({ city: results.city, places: results.places }); 
+        }
+    })
 }; 
 
 exports.city_create_get = (req, res, next) => { 
