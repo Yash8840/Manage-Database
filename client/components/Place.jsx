@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-
-const Place = () => { 
+import { NavLink } from "react-router-dom";
+const Place = (props) => {
+    const { id, title } = props; 
     return( 
-        <section className="place"></section>
+        <section className="place">
+            <h1> { title } </h1>
+            <NavLink to = {{ pathname: `/places/${id}`}}> Vezi </NavLink>
+        </section>
     )
 }; 
 

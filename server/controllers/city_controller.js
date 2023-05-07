@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator'); 
-const async = require("async"); 
 
 const City = require("../models/city"); 
+const Place = require("../models/place"); 
 
 exports.city_list = async (req, res, next) => { 
     const cities = await City.find({}, "title").exec(); 
@@ -12,24 +12,16 @@ exports.city_list = async (req, res, next) => {
     }
 }; 
 
-exports.city_detail = async (req, res, next) => { 
-    async.waterfall({ 
-        async city () { 
-            const c = await City.findById(req.params.id).exec();
-            return c; 
-        }, 
 
-        async places () { 
-            const p = await Place.find({ city: city.title }); 
-            return p; 
-        }
-    }, (err, results) => { 
+exports.city_detail = async (req, res, next) => { 
+        const city = await City.findById(req.params.id).exec(); 
+        const placesInCity = await Place.find({ city: city.title }).exec(); 
+
         if(city == null) { 
             res.status(403); 
         } else { 
-            res.status(200).json({ city: results.city, places: results.places }); 
+            res.status(200).json({ city: city, placesInCity: placesInCity }); 
         }
-    })
 }; 
 
 exports.city_create_get = (req, res, next) => { 

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 const City = (props) => {
-    const { id, title } = props;  
-    const [data, setData] = useState({}); 
+    const { id, title } = props;   
 
     return( 
         <section className="city">
