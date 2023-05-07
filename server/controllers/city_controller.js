@@ -107,10 +107,72 @@ exports.city_delete_post = async (req, res, next) => {
     }
 }; 
 
-exports.city_update_get = (req, res, next) => { 
-    res.send("NOT IMPLEMENTED: city update GET"); 
+exports.city_update_get = async (req, res, next) => { 
+    const city = await City.findById(req.params.id); 
+    res.status(200).send(city); 
 }; 
 
-exports.city_update_post = (req, res, next) => { 
-    res.send("NOT IMPLEMENTED: city update POST"); 
-}; 
+exports.city_update_post = [ 
+    body("title", "Title is required")
+        .trim() 
+        .isLength({ min: 1}) 
+        .escape(), 
+    body("components")
+        .trim()
+        .optional({ checkFalsy: true })
+        .escape(), 
+    body("description", "Description is required")
+        .trim() 
+        .isLength({ min: 1}) 
+        .escape(), 
+    body("photo")
+        .trim()
+        .optional({ checkFalsy: true })
+        .escape(), 
+    body("surface", "Surface is required")
+        .trim()
+        .isNumeric() 
+        .escape(), 
+    body("history")
+        .trim()
+        .optional({ checkFalsy: true })
+        .isString() 
+        .escape(), 
+    body("population", "Population is required")
+        .trim()
+        .isNumeric() 
+        .escape(), 
+    async (req, res, next) => { 
+        const errors = validationResult(req); 
+
+        const city = new City( 
+            {
+                title: req.body.title, 
+                components: req.body.components, 
+                description: req.body.description, 
+                photo: req.body.photo, 
+                surface: req.body.surface, 
+                history: req.body.history, 
+                population: req.body.population, 
+                _id: req.params.id, 
+            }
+        ); 
+
+        if(!errors.isEmpty()) { 
+            res.status(403).json({ 
+                pageTitle: "Creeaza Oras", 
+                title: req.body.title, 
+                components: req.body.components, 
+                description: req.body.description, 
+                photo: req.body.photo, 
+                surface: req.body.surface, 
+                history: req.body.history, 
+                population: req.body.population, 
+                errors: errors.array(),
+            }); 
+        }; 
+
+        await City.updateOne({ _id: city._id }, city); 
+        res.status(200).json({ message: "city added", city}); 
+    }
+]

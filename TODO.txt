@@ -1,5 +1,3 @@
-- implement place list for one city(city detail API - implement async parallel)
-- CLIENT: page detaill 
 - API: update place and city 
 - API: add photo system 
 

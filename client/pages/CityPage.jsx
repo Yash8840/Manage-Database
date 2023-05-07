@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import PlacePage from "./PlacePage";
 import Place from "../components/Place";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const CityPage = () => { 
     const [data, setData] = useState({}); 
@@ -55,10 +56,11 @@ const CityPage = () => {
 
     return( 
         <section className="detail-page page">
+            <pre> { JSON.stringify(data) } </pre>
             <article className="developer-area">
                 <h2> { data.title } </h2>
                 <button onClick={ handleDelete }> Sterge Oras </button>
-                <button> Actualizeaza informatii </button>
+                <NavLink to = {{pathname: `/cities/${data._id}/update`}}> Actualizeaza informatii </NavLink>
             </article>
             <hr />
             <article className="informations">
