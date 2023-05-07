@@ -17,7 +17,13 @@ const Cities = () => {
     }, []); 
     return(
         <section className="page cities-page">
-            <pre> { JSON.stringify(data) } </pre>
+            { data.cities?.map( c => { 
+                return( 
+                    <article key = { c._id } >
+                        <City id = { c._id } title = { c.title } />
+                    </article>
+                )
+            })}
         </section>
     )
 }; 

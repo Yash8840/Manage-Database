@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "../helpers/fetchData";
 import { useLocation } from "react-router-dom";
+import PlacePage from "./PlacePage";
 
 const CityPage = () => { 
     const [data, setData] = useState({}); 
@@ -37,10 +38,7 @@ const CityPage = () => {
                     <p className="info components"> Urmatoarele sate apartin de acest oras: </p>
                     <p> { data.components } </p>
                 </>
-                }
-
-                <p className="info surface"> Orasul are o suprafata de: { data.surface } </p>
-                
+                }                
                 { data.history && 
                     <>
                         <p className="info history">Istoria orasului: </p>
@@ -48,7 +46,12 @@ const CityPage = () => {
                     </>
                 }
 
-                <p className="info population"> Orasul are o populatie de: { data.population } </p>
+                <hr />
+                <p className="info population"> Populatie: { data.population } </p>
+                <p className="info surface"> Suprafata: { data.surface } km ^ 2  </p>
+                <hr />
+
+                <h3>Atractii: </h3>
             </article>
         </section>
     )
