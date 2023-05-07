@@ -8,7 +8,7 @@ const City = (props) => {
     return( 
         <section className="city">
             <h1>Oras: { title }</h1>
-            <NavLink to = { `cities/${id}` }> View </NavLink>
+            <NavLink to = {{ pathname: `cities/${id}` }}> View </NavLink>
         </section>
     )
 }; 
