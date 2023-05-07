@@ -1,23 +1,12 @@
 import React, {useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
+import fetchData from "../helpers/fetchData";
 import  { useForm } from "react-hook-form"; 
 
-const PlaceForm = () => { 
+const PlaceForm = ({ apiCities, placeTypes }) => { 
     const navigate = useNavigate(); 
     const  { register, handleSubmit } = useForm (); 
-    const [ cities, setCities ] = useState([]); 
-    const [ placeTypes, setPlaceTypes ] = useState(""); 
-
-    useEffect( () => { 
-        const renderData = async () => { 
-            const res = await fetchData("http://localhost:3000/cities/api"); 
-            setCities(res); 
-            console.log(res); 
-        }
-
-        renderData(); 
-    }, []); 
 
     const [title, setTitle] = useState(""); 
     const [description, setDescription] = useState(""); 
@@ -27,6 +16,8 @@ const PlaceForm = () => {
     const [city, setCity] = useState(""); 
     const [adress, setAdress] = useState(""); 
     const [formMsg, setFormMsg] = useState(""); 
+
+
 
     const submitForm = async () => { 
         console.log("hellooooo");
@@ -105,10 +96,11 @@ const PlaceForm = () => {
                     <select {...register ("type", { required: "required field" })}
                         onChange = { e => { setType(e.target.value)}}
                         name="type" id="type">
-                        {/* testing options*/}
-                        <option value="manastire">Manastire</option>
-                        <option value="lac">Lac</option>
-                        <option value="constructie">Constructie</option>
+                        { placeTypes.length > 0 && placeTypes.map(type => { 
+                            return ( 
+                                <option key =  { type } value= { type }> {type } </option>
+                            )
+                        })}
                     </select>
                 </div>
 
@@ -133,11 +125,9 @@ const PlaceForm = () => {
                     <select {...register("city")}
                         onChange = { e =>  { setCity(e.target.value)} }
                         name="city" id="city">
-                        <option value="Vaslui">Vaslui</option>
-                        <option value="Husi">Husi</option>
-                        <option value="Barlad">Barlad</option>
-                        <option value="Negresti">Negresti</option>
-                        <option value="Murgeni">Murgeni</option>
+                        {apiCities.length > 0 && apiCities.map( city => { 
+                            return <option key = { city._id } value= { city.title }> { city.title } </option>
+                        })}
                     </select>
                 </div>
 
