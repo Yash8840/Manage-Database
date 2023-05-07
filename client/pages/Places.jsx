@@ -1,15 +1,20 @@
 import React, { useState, useEffect} from "react";
-import useFetch from "../hooks/useFetch";
 import NavBar from "../components/NavBar";
 import Place from "../components/Place";
 
 const Places = () =>  {
     const [data, setData] = useState( {}); 
     useEffect( () => { 
-        (async () => {
-            const dataSet = await useFetch(`http://localhost:3000/api/places`); 
-            setData(dataSet); 
-         })(); 
+        const fetchData = async () => { 
+            const result = await fetch("http://localhost:3000/api/places", { 
+                method: "GET"
+            });  
+
+            const res = await result.json(); 
+            setData(res); 
+        }
+
+        fetchData (); 
     }, [])
 
     return ( 
