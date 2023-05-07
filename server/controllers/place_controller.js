@@ -12,6 +12,10 @@ exports.place_list = async (req, res, next) => {
     }
 }; 
 
+exports.place_types = (req, res, next) => {
+    res.send(PLACE_TYPES); 
+}
+
 exports.place_detail = async (req, res, next) => { 
     try { 
         const place = await Place.findById(req.params.id).exec();

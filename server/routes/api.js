@@ -15,6 +15,7 @@ router.get("/login", auth_controller.login_get);
 router.post("/login", auth_controller.login_post); 
 
 // Place Routes
+router.get("/places/types", place_controller.place_types); 
 router.get("/places/create", place_controller.place_create_get); 
 router.post("/places/create", place_controller.place_create_post); 
 

@@ -6,6 +6,18 @@ import  { useForm } from "react-hook-form";
 const PlaceForm = () => { 
     const navigate = useNavigate(); 
     const  { register, handleSubmit } = useForm (); 
+    const [ cities, setCities ] = useState([]); 
+    const [ placeTypes, setPlaceTypes ] = useState(""); 
+
+    useEffect( () => { 
+        const renderData = async () => { 
+            const res = await fetchData("http://localhost:3000/cities/api"); 
+            setCities(res); 
+            console.log(res); 
+        }
+
+        renderData(); 
+    }, []); 
 
     const [title, setTitle] = useState(""); 
     const [description, setDescription] = useState(""); 

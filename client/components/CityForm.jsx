@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
+import fetchData from "../helpers/fetchData.js"; 
 import { useForm } from "react-hook-form";
 
 const CityForm = () => {
     const { register, handleSubmit } = useForm(); 
+    const [ cities, setCities ] = useState([]); 
+
+    useEffect( () => { 
+        const renderData = async () => { 
+            const res = await fetchData("http://localhost:3000/cities/api"); 
+            setCities(res); 
+            console.log(res); 
+        }
+
+        renderData(); 
+    }, []); 
 
     /* states */ 
     const [title, setTitle] = useState(""); 
