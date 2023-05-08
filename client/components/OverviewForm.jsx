@@ -11,11 +11,13 @@ const Overview = (props) => {
                     <article key = { info.id } className = "over-view-element"> 
                         <p> <span> { info.id } </span> { info.text } </p>
                         <button className="delete-button-ov"
+                            type = "button"
                             onClick = { () => { 
                                 onDelete(info.id)
                             }}
                             >D</button>
                         <button className="show-edit-button-ov"
+                            type = "button"
                             onClick = { () => { onShowEdit(info)}}>✎</button>
 
                         { 

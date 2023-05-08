@@ -8,7 +8,7 @@ const Form = (props) => {
             <input type="text" className="multiple-input" name = "multiple-input" id = { `info-field-input` } />
             <button
                 onClick={ () => { onAddInfo(document.getElementById("info-field-input").value)}}
-                type = "reset"
+                type = "button"
                 className = "multiple-button"> Adauga </button>
         </form>
     )

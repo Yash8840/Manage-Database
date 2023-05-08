@@ -4,3 +4,6 @@ https://www.youtube.com/watch?v=GyzC-30Bqfc
 
 - vector de adrese 
 - cautare atractii dupa tip
+
+- PLACE: city as an input with serach in database 
+- City: components problem 

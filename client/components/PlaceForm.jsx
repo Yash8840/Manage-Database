@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
 import fetchData from "../helpers/fetchData";
 import  { useForm } from "react-hook-form"; 
+import InfoFieldMultiple from "./InfoField";
 
 const PlaceForm = ({ apiCities, placeTypes }) => { 
     const navigate = useNavigate(); 
@@ -14,12 +15,23 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
     const [history, setHistory] = useState(""); 
     const [contact, setContact] = useState(""); 
     const [city, setCity] = useState(""); 
-    const [adress, setAdress] = useState(""); 
+    const [adress, setAdress] = useState([]); 
     const [formMsg, setFormMsg] = useState(""); 
 
+    const prepareArray = (array) => { 
+        const result = []; 
+        array.forEach(el => { 
+            result.push(el.text); 
+        }); 
 
+        return result; 
+    }
 
     const submitForm = async () => { 
+        const adressData = [];
+        adress.forEach(adress => { 
+            adressData.push(adress.text); 
+        })
         console.log("hellooooo");
         const formData = JSON.stringify({ 
             title, 
@@ -28,7 +40,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
             history, 
             contact, 
             city, 
-            adress
+            adress: adressData, 
         }); 
 
         console.log(formData)
@@ -62,6 +74,10 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
     }
 
     const testFormData = () => { 
+        const adressData = [];
+        adress.forEach(ad => { 
+            adressData.push(ad.text); 
+        })
         const formData = JSON.stringify({ 
             title, 
             description, 
@@ -69,12 +85,84 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
             history, 
             contact, 
             city, 
-            adress
+            adress: adressData, 
         }); 
 
         console.log("TESTING FORM DATA: "); 
         console.log(formData); 
     }
+
+    const [ mainShowEdit, setMainShowEdit ] = useState(false); 
+
+    const handleCancel = () => { 
+        const adressEdit = [...adress]; 
+        adressEdit.forEach(info => info.showEdit = false); 
+
+        setMainShowEdit(false); 
+        setAdress(adressEdit); 
+    }
+
+    const handleCancelOne = (info) => { 
+        const adressEdit = [...adress]; 
+
+        adressEdit.map(i => { 
+            if (i == info) { 
+                i.showEdit = false; 
+            }
+            return i; 
+        })
+
+        setAdress(adressEdit); 
+    }
+
+    const showEditHandler = (info) => { 
+        const adressEdit = [...adress]; 
+        const index = adressEdit.indexOf(info); 
+
+        adressEdit[index].showEdit = true; 
+        setAdress(adressEdit); 
+    }
+
+    const showMainEditHandler = () => { 
+        const show = !mainShowEdit; 
+        setMainShowEdit(show); 
+    }; 
+
+    const addMainInfoHandler = () => { 
+        const adressEdit = [...adress];
+        const input = document.getElementById("info-field-input").value; 
+        const show = !mainShowEdit; 
+
+        adressEdit.push({ id: adress.length + 1, text: input, showEdit: false }); 
+        setAdress(adressEdit); 
+        setMainShowEdit(show); 
+    }; 
+
+    const handleDelete = (counterId) => { 
+        const infoFilter = adress.filter (info => info.id !== counterId ); 
+
+        const adressEdit = infoFilter.map(info => { 
+            info.id = infoFilter.indexOf(info) + 1; 
+            return info; 
+        }); 
+
+        setAdress(adressEdit); 
+    } 
+
+    const handleEdit = (info, text) => { 
+        const adressEdit = [...adress]; 
+        console.log(adressEdit); 
+        const index = adressEdit.indexOf(info); 
+
+        console.log(index); 
+        console.log(adressEdit[index]); 
+
+        adressEdit[index].text = text; 
+        adressEdit[index].showEdit = false;
+        setAdress(adressEdit); 
+    }
+ 
+
     return( 
         <section className="form">
             <form method="POST" action = "http://localhost:3000/api/places/create" onSubmit={() => { handleSubmit(submitForm)}}>
@@ -131,11 +219,20 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                     </select>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="adress">Selecteaza o adresa</label>
-                    <input {...register("adress")}  type="text" 
-                        onChange = { e => setAdress(e.target.value)}
-                        name = "adress" />
+                <div className="form-group"> 
+                    <input type="hidden" {...register("adress")} value = { prepareArray(adress) } />
+                    <InfoFieldMultiple 
+                        name = "Adresa / Adresele locatiei: " 
+                        description = "" 
+                        informations = { adress } 
+                        handleCancel = { handleCancel } 
+                        handleCancelOne = { handleCancelOne } 
+                        showEditHandler = { showEditHandler } 
+                        showMainEditHandler = { showMainEditHandler }
+                        handleDelete = { handleDelete }
+                        addMainInfoHandler = { addMainInfoHandler }
+                        handleEdit = { handleEdit }
+                        mainShowEdit = { mainShowEdit } /> 
                 </div>
 
                 <button type = "submit"> Adauga Atractie </button>
