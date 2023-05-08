@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator"); 
 
 const Place = require("../models/place");
+const City = require("../models/city");
 const PLACE_TYPES = require("../global/place_types"); 
 
 exports.place_list = async (req, res, next) => { 
@@ -19,7 +20,12 @@ exports.place_types = (req, res, next) => {
 exports.place_detail = async (req, res, next) => { 
     try { 
         const place = await Place.findById(req.params.id).exec();
+        if(await City.find({ title: place.city}).exec()) { 
+            const city = await City.find({ title: place.city}).exec(); 
+            res.status(200).json({ place: place, city: city })
+        }
         res.status(200).json({ place: place }); 
+        
     } catch (e){ 
         res.status(403); 
     }

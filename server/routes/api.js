@@ -6,6 +6,7 @@ const city_controller = require("../controllers/city_controller");
 const place_controller = require("../controllers/place_controller");    
 const user_controller = require("../controllers/user_controller");
 const auth_controller = require("../controllers/auth_controller"); 
+const road_controller = require("../controllers/road_controller"); 
 
 router.get("/", home_controller.index); 
 
@@ -48,5 +49,15 @@ router.delete("/profiles/:id", user_controller.user_delete);
 
 // Road Routes. 
 // In work 
+
+router.get("/roads/create", road_controller.road_create_get); 
+router.post("/roads/create", road_controller.road_create_post); 
+
+router.get("/roads/:id/update", road_controller.road_update_get); 
+router.put("/roads/:id/update", road_controller.road_update_put);
+
+router.get("/roads", road_controller.roads_list); 
+router.get("/roads/:id", road_controller.road_detail); 
+router.delete("/roads/:id", road_controller.road_delete); 
 
 module.exports = router; 

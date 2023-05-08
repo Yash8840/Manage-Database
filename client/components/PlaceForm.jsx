@@ -210,13 +210,9 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
 
                 <div className="form-group">
                     <label htmlFor="city">Selecteaza Orasul(optional): </label>
-                    <select {...register("city")}
+                    <input {...register("city")}
                         onChange = { e =>  { setCity(e.target.value)} }
-                        name="city" id="city">
-                        {apiCities.length > 0 && apiCities.map( city => { 
-                            return <option key = { city._id } value= { city.title }> { city.title } </option>
-                        })}
-                    </select>
+                        name="city" id="city"/>
                 </div>
 
                 <div className="form-group"> 

@@ -16,7 +16,6 @@ const HomePage = () => {
 
     return( 
         <section className="page home-page">
-            {data.cities && <p> { JSON.stringify(data.cities) }</p> } 
             { data.cities?.map( c => { 
                 return( 
                     <article key = { c._id } >
