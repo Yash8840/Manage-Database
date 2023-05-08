@@ -8,12 +8,16 @@ const PlacePage = () => {
     const location = useLocation(); 
     const navigate = useNavigate(); 
     const [ data, setData ] = useState({}); 
+    const [ city, setCity ] = useState({}); 
     const [ successDeleteMessage, setSuccessDeleteMessage ] = useState("");  
 
     useEffect (() => {
         const renderData = async () => { 
             const res = await fetchData(`http://localhost:3000/api${location.pathname}`); 
             setData(res.place); 
+            if(res.city) { 
+                setCity(res.city[0])
+            }
             console.log(res); 
         }
 
@@ -44,6 +48,7 @@ const PlacePage = () => {
     }
     return ( 
         <section className="detail-page page">
+            <pre> { JSON.stringify(typeof city)} </pre>
             <h2> { data.title } </h2>
             <article className="developer">
                 <button onClick={ handleDelete }>Sterge Locatie</button>
@@ -60,8 +65,10 @@ const PlacePage = () => {
                         <p className="info history"> { data.history } </p>
                     </>
                 }
-                <hr />
 
+                    <p>a</p>
+                    <NavLink to = { `/cities/${city._id}`}> { city.title }</NavLink> 
+                <hr />
                 { data.contact && 
                     <p className="info contact">Contact: { data.contact } </p>
                 }
