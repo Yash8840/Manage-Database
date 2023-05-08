@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "../helpers/fetchData";
 import { useLocation } from "react-router-dom";
-import PlacePage from "./PlacePage";
 import Place from "../components/Place";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const CityPage = () => { 
     const [data, setData] = useState({}); 
+    const [ placeTypes, setPlaceTypes ] = useState([]); 
     const [placesData, setPlacesData] = useState({}); 
     const location = useLocation(); 
     const navigate = useNavigate(); 
@@ -18,6 +18,9 @@ const CityPage = () => {
         const renderData = async () => { 
             try { 
                 const res = await fetchData(`http://localhost:3000/api/${location.pathname}`); 
+                const resTypes = await fetchData("http://localhost:3000/api/places/types"); 
+                setPlaceTypes(resTypes); 
+                console.log(resTypes); 
                 setData(res.city); 
                 setPlacesData(res.placesInCity); 
                 console.log(res.placesInCity); 
@@ -85,11 +88,24 @@ const CityPage = () => {
                 <hr />
 
                 <h3>Atractii: </h3>
-                { placesData.length > 0 && placesData.map(place => { 
-                    return ( 
-                        <article key = { place._id }> <Place id = { place._id } title = { place.title } /> </article>
-                    )
-                })}
+                { placeTypes.length > 0 && 
+                    placeTypes.map(type => { 
+                        return ( 
+                            <>
+                                { placesData.some(t => t.type == type) && <p> { type } </p> }
+                                { placesData.map(place => { 
+                                    if(place.type == type) { 
+                                        return ( 
+                                            <article key = { place._id}>
+                                                <Place id = { place._id} title = { place.title }/>
+                                            </article>
+                                        )
+                                    }
+                                })}
+                            </>
+                        )
+                    })
+                }
             </article>
         </section>
     )
