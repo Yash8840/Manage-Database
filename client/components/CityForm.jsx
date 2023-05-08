@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 const CityForm = () => {
     const { register, handleSubmit } = useForm(); 
 
-
     /* states */ 
     const [title, setTitle] = useState(""); 
     const [components, setComponents] = useState([]); 
@@ -18,11 +17,11 @@ const CityForm = () => {
     const submitForm = async () => { 
         const dataComponents = []; 
         components.forEach(comp => { 
-            dataComponents.push(comp.text); 
+            dataComponents.push(JSON.stringify(comp.text)); 
         })
         const formData = JSON.stringify({ 
             title, 
-            components: dataComponents, 
+            components,  
             description, 
             surface, 
             history, 
