@@ -25,10 +25,6 @@ const CityForm = () => {
 
 
     const submitForm = async () => { 
-        const dataComponents = []; 
-        components.forEach(comp => { 
-            dataComponents.push(JSON.stringify(comp.text)); 
-        })
         const formData = JSON.stringify({ 
             title, 
             components,  
@@ -61,13 +57,9 @@ const CityForm = () => {
     }
  
     const testForm = () => { 
-        const dataComponents = []; 
-        components.forEach(comp => { 
-            dataComponents.push(comp.text); 
-        })
         const formData = JSON.stringify({ 
             title, 
-            components: dataComponents, 
+            components, 
             description, 
             surface, 
             history, 

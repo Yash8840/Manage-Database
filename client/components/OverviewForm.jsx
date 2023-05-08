@@ -1,5 +1,6 @@
 import React from "react";
 import Editor from "./EditorForm";
+import generateRandomKey from "../helpers/randomKey";
 
 const Overview = (props) => { 
     const { informations, onDelete, onEditInfo, onShowEdit, onCancelOne } = props; 
@@ -8,8 +9,8 @@ const Overview = (props) => {
         <section className="overview">
             { informations.map(info => { 
                 return ( 
-                    <article key = { info.id } className = "over-view-element"> 
-                        <p> <span> { info.id } </span> { info.text } </p>
+                    <article key = { generateRandomKey(20) } className = "over-view-element"> 
+                        <p> <span> { info.id } </span> { info.text || info } </p>
                         <button className="delete-button-ov"
                             type = "button"
                             onClick = { () => { 

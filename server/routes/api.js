@@ -30,8 +30,8 @@ router.delete("/places/:id", place_controller.place_delete_post);
 router.get("/cities/create", city_controller.city_create_get); 
 router.post("/cities/create", city_controller.city_create_post); 
 
-router.get("/cities/:id/update", city_controller.city_update_get); 
 router.put("/cities/:id/update", city_controller.city_update_post);
+router.get("/cities/:id/update", city_controller.city_update_get); 
 
 router.get("/cities", city_controller.city_list); 
 router.get("/cities/:id", city_controller.city_detail); 
