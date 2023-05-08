@@ -9,8 +9,8 @@ const InfoFieldMultiple = (props) => {
 
     return ( 
         <>
-            <h3> { name } </h3>
-            <p> { description } </p>
+            { name !== "" && <p> { name } </p> } 
+            { description !== "" && <p> { description } </p> } 
             <Overview 
             informations = { informations } 
             onDelete = { handleDelete } 

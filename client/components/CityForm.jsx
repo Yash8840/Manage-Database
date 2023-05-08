@@ -163,8 +163,8 @@ const CityForm = () => {
                 <div className="form-group"> 
                 <input type="hidden" {...register("components")} value = { prepareArray(components) } />
                     <InfoFieldMultiple 
-                        name = "test" 
-                        description = "test" 
+                        name = "Satele componente ale orasului(optional): " 
+                        description = "" 
                         informations = { components } 
                         handleCancel = { handleCancel } 
                         handleCancelOne = { handleCancelOne } 

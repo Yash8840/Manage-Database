@@ -74,8 +74,6 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
     }
 
     const testFormData = () => { 
-        console.log("ADRESS: "); 
-        console.log(prepareArray(adress)); 
         const adressData = [];
         adress.forEach(ad => { 
             adressData.push(ad.text); 
@@ -224,8 +222,8 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                 <div className="form-group"> 
                     <input type="hidden" {...register("adress")} value = { prepareArray(adress) } />
                     <InfoFieldMultiple 
-                        name = "test" 
-                        description = "test" 
+                        name = "Adresa / Adresele locatiei: " 
+                        description = "" 
                         informations = { adress } 
                         handleCancel = { handleCancel } 
                         handleCancelOne = { handleCancelOne } 
