@@ -1,5 +1,6 @@
-- API: update place and city 
 - API: add photo system 
+https://www.youtube.com/watch?v=GyzC-30Bqfc
+
 
 - vector de adrese 
 - cautare atractii dupa tip

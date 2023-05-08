@@ -15,7 +15,6 @@ const App = () => {
   return( 
     <section className="app"> 
       <NavBar/> 
-
       <Routes>
         <Route path = "/" element = { <HomePage />} />
         <Route path = "/places" element = { <Places /> } />
