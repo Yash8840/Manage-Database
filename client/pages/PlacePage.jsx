@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import fetchData from "../helpers/fetchData";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const PlacePage = () => { 
     const location = useLocation(); 
@@ -11,7 +12,7 @@ const PlacePage = () => {
 
     useEffect (() => {
         const renderData = async () => { 
-            const res = await fetchData(`http://localhost:3000/api/${location.pathname}`); 
+            const res = await fetchData(`http://localhost:3000/api${location.pathname}`); 
             setData(res.place); 
             console.log(res); 
         }
@@ -46,7 +47,7 @@ const PlacePage = () => {
             <h2> { data.title } </h2>
             <article className="developer">
                 <button onClick={ handleDelete }>Sterge Locatie</button>
-                <button>Actualizeaza Locatie</button>
+                <NavLink to = {{ pathname: `/places/${data._id}/update`}}>Actualizeaza atractie</NavLink>
             </article>
 
             <article className="informations">

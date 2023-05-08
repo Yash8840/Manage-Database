@@ -8,7 +8,7 @@ import InfoFieldMultiple from "../components/InfoField";
 const UpdateCity = () => {
     const { register, handleSubmit } = useForm(); 
     const location = useLocation(); 
-    const navigate= useNavigate(); 
+    const navigate = useNavigate(); 
 
     /* states */ 
     const [ defaultPath, setDefaultPath ] = useState(""); 
@@ -19,7 +19,6 @@ const UpdateCity = () => {
     const [history, setHistory] = useState(""); 
     const [population, setPopulation] = useState(""); 
     const [message, setMessage] = useState(""); 
-
 
     const prepareArray = (array) => { 
         const result = []; 
@@ -69,7 +68,7 @@ const UpdateCity = () => {
 
         try { 
             const req = await fetch(`http://localhost:3000/api${location.pathname}`, { 
-                method: "PUT", 
+                method: "put", 
                 mode: "cors", 
                 body: formData, 
                 headers: { 
@@ -177,11 +176,11 @@ const UpdateCity = () => {
     
     return( 
         <section className="form">
-            <form  method = "PUT" onSubmit = { () => { console.log("1") }} >
+            <form  method = "PUT" action = { `http://localhost:3000/api${location.pathname}` } onSubmit = { () => { () => { handleSubmit(submitForm)}}  } >
                 <div className="form-group">
                     <label htmlFor="title">Numele Orasului: </label>
                     <input 
-                        { ...register("title", { required: "required Field"})}
+                        { ...register("title", { required: "required field"})}
                         onChange = { e => setTitle(e.target.value)}
                         value = { title }
                         type="text" name = "title" placeholder="Aa" />
@@ -239,7 +238,7 @@ const UpdateCity = () => {
                         type="number" min = { 100 } />
                 </div>
 
-                    <button>Actualizeaza Oras</button>
+                    <button type = "submit">Actualizeaza Oras</button>
             </form>
 
             <button onClick = { () => { navigate(-1)}}>Inapoi</button>

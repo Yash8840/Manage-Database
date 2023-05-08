@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import PlacePage from "../pages/PlacePage";
 import CityPage from "../pages/CityPage";
 import UpdateCity from "../pages/UpdateCity";
+import UpdatePlace from "../pages/UpdatePlace";
 import "../css/main.css"; 
 
 const App = () => { 
@@ -26,7 +27,7 @@ const App = () => {
         {/* Detail Routes*/}
         <Route path = "/places/:id" element = { <PlacePage />} /> 
         <Route path = "/cities/:id" element = { <CityPage /> } /> 
-        <Route path = "/places/:id/update" element = { <PlaceManage /> } /> 
+        <Route path = "/places/:id/update" element = { <UpdatePlace /> } /> 
         <Route path = "/cities/:id/update" element = { <UpdateCity /> } /> 
       </Routes>
     </section>
