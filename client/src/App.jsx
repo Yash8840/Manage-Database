@@ -9,16 +9,12 @@ import { Routes, Route } from "react-router-dom";
 import PlacePage from "../pages/PlacePage";
 import CityPage from "../pages/CityPage";
 import UpdateCity from "../pages/UpdateCity";
-import InfoFieldMultiple from "../components/InfoField";
 import "../css/main.css"; 
 
 const App = () => { 
   return( 
     <section className="app"> 
       <NavBar/> 
-
-      <InfoFieldMultiple name = "test" description = "test" />
-
       <Routes>
         <Route path = "/" element = { <HomePage />} />
         <Route path = "/places" element = { <Places /> } />
