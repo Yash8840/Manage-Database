@@ -12,7 +12,17 @@ const CityForm = () => {
     const [surface, setSurface] = useState(0); 
     const [history, setHistory] = useState(""); 
     const [population, setPopulation] = useState(""); 
-    const [message, setMessage] = useState(""); 
+    const [message, setMessage] = useState("");
+    
+    const prepareArray = (array) => { 
+        const result = []; 
+        array.forEach(el => { 
+            result.push(el.text); 
+        }); 
+
+        return result; 
+    }
+
 
     const submitForm = async () => { 
         const dataComponents = []; 
@@ -151,6 +161,7 @@ const CityForm = () => {
                 </div>
 
                 <div className="form-group"> 
+                <input type="hidden" {...register("components")} value = { prepareArray(components) } />
                     <InfoFieldMultiple 
                         name = "test" 
                         description = "test" 
