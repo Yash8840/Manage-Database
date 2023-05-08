@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
-import fetchData from "../helpers/fetchData.js"; 
+import InfoFieldMultiple from "./InfoField";
 import { useForm } from "react-hook-form";
 
 const CityForm = () => {
     const { register, handleSubmit } = useForm(); 
-    const [ cities, setCities ] = useState([]); 
 
-    useEffect( () => { 
-        const renderData = async () => { 
-            const res = await fetchData("http://localhost:3000/cities/api"); 
-            setCities(res); 
-            console.log(res); 
-        }
-
-        renderData(); 
-    }, []); 
 
     /* states */ 
     const [title, setTitle] = useState(""); 
-    const [components, setComponents] = useState(""); 
+    const [components, setComponents] = useState([]); 
     const [description, setDescription] = useState(""); 
     const [surface, setSurface] = useState(0); 
     const [history, setHistory] = useState(""); 
@@ -26,9 +16,13 @@ const CityForm = () => {
     const [message, setMessage] = useState(""); 
 
     const submitForm = async () => { 
+        const dataComponents = []; 
+        components.forEach(comp => { 
+            dataComponents.push(comp.text); 
+        })
         const formData = JSON.stringify({ 
             title, 
-            components, 
+            components: dataComponents, 
             description, 
             surface, 
             history, 
@@ -58,9 +52,13 @@ const CityForm = () => {
     }
  
     const testForm = () => { 
+        const dataComponents = []; 
+        components.forEach(comp => { 
+            dataComponents.push(comp.text); 
+        })
         const formData = JSON.stringify({ 
             title, 
-            components, 
+            components: dataComponents, 
             description, 
             surface, 
             history, 
@@ -69,6 +67,78 @@ const CityForm = () => {
 
         console.log(formData)
     }
+
+    /*  info field */
+    const [ mainShowEdit, setMainShowEdit ] = useState(false); 
+
+    const handleCancel = () => { 
+        const componentsEdit = [...components]; 
+        componentsEdit.forEach(info => info.showEdit = false); 
+
+        setMainShowEdit(false); 
+        setComponents(componentsEdit); 
+    }
+
+    const handleCancelOne = (info) => { 
+        const componentsEdit = [...components]; 
+
+        componentsEdit.map(i => { 
+            if (i == info) { 
+                i.showEdit = false; 
+            }
+            return i; 
+        })
+
+        setComponents(componentsEdit); 
+    }
+
+    const showEditHandler = (info) => { 
+        const componentsEdit = [...components]; 
+        const index = componentsEdit.indexOf(info); 
+
+        componentsEdit[index].showEdit = true; 
+        setComponents(componentsEdit); 
+    }
+
+    const showMainEditHandler = () => { 
+        const show = !mainShowEdit; 
+        setMainShowEdit(show); 
+    }; 
+
+    const addMainInfoHandler = () => { 
+        const componentsEdit = [...components];
+        const input = document.getElementById("info-field-input").value; 
+        const show = !mainShowEdit; 
+
+        componentsEdit.push({ id: components.length + 1, text: input, showEdit: false }); 
+        setComponents(componentsEdit); 
+        setMainShowEdit(show); 
+    }; 
+
+    const handleDelete = (counterId) => { 
+        const infoFilter = components.filter (info => info.id !== counterId ); 
+
+        const componentsEdit = infoFilter.map(info => { 
+            info.id = infoFilter.indexOf(info) + 1; 
+            return info; 
+        }); 
+
+        setComponents(componentsEdit); 
+    } 
+
+    const handleEdit = (info, text) => { 
+        const componentsEdit = [...components]; 
+        console.log(componentsEdit); 
+        const index = componentsEdit.indexOf(info); 
+
+        console.log(index); 
+        console.log(componentsEdit[index]); 
+
+        componentsEdit[index].text = text; 
+        componentsEdit[index].showEdit = false;
+        setComponents(componentsEdit); 
+    }
+ 
 
     return( 
         <section className="form">
@@ -81,12 +151,19 @@ const CityForm = () => {
                         type="text" name = "title" placeholder="Aa" />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="components">Sate Componente: </label>
-                    <input type="text"
-                        { ...register("components")}
-                        onChange = { e => setComponents(e.target.value )}
-                        name = "components" placeholder = "scrie aici lista satelor componente" />
+                <div className="form-group"> 
+                    <InfoFieldMultiple 
+                        name = "test" 
+                        description = "test" 
+                        informations = { components } 
+                        handleCancel = { handleCancel } 
+                        handleCancelOne = { handleCancelOne } 
+                        showEditHandler = { showEditHandler } 
+                        showMainEditHandler = { showMainEditHandler }
+                        handleDelete = { handleDelete }
+                        addMainInfoHandler = { addMainInfoHandler }
+                        handleEdit = { handleEdit }
+                        mainShowEdit = { mainShowEdit } /> 
                 </div>
 
                 <div className="form-group">
