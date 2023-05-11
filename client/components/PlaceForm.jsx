@@ -17,6 +17,15 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
     const [city, setCity] = useState(""); 
     const [adress, setAdress] = useState([]); 
     const [formMsg, setFormMsg] = useState(""); 
+    const [images, setImages] = useState([]); 
+
+    const handleFile = (e) => { 
+        console.log("FILES"); 
+        console.log(e.target.files); 
+
+        console.log("0 Files");
+        console.log(e.target.files[0])
+    }
 
     const prepareArray = (array) => { 
         const result = []; 
@@ -33,15 +42,16 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
             adressData.push(adress.text); 
         })
         console.log("hellooooo");
-        const formData = JSON.stringify({ 
+        const formData = { 
             title, 
             description, 
             type, 
+            photo: images, 
             history, 
             contact, 
             city, 
             adress: adressData, 
-        }); 
+        }; 
 
         console.log(formData)
         
@@ -51,7 +61,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                 {
                     method: "POST", 
                     mode: "cors", 
-                    body: formData, 
+                    body: JSON.stringify(formData), 
                     headers: { 
                         "Content-Type": "application/json",
                     }
@@ -78,15 +88,16 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
         adress.forEach(ad => { 
             adressData.push(ad.text); 
         })
-        const formData = JSON.stringify({ 
+        const formData = { 
             title, 
             description, 
             type, 
             history, 
             contact, 
+            photo: images, 
             city, 
             adress: adressData, 
-        }); 
+        }; 
 
         console.log("TESTING FORM DATA: "); 
         console.log(formData); 
@@ -165,7 +176,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
 
     return( 
         <section className="form">
-            <form method="POST" action = "http://localhost:3000/api/places/create" onSubmit={() => { handleSubmit(submitForm)}}>
+            <form method="POST" action = "http://localhost:3000/api/places/create" encType="multipart/form-data" onSubmit={() => { handleSubmit(submitForm)}}>
                 <div className="form-group">
                     <label htmlFor="title">Titlul Atractiei: </label>
                     <input {...register ("title", { required: "required field" })} type="text" name = "title" 
@@ -229,6 +240,10 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                         addMainInfoHandler = { addMainInfoHandler }
                         handleEdit = { handleEdit }
                         mainShowEdit = { mainShowEdit } /> 
+                </div>
+
+                <div>
+                        <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo[]" />
                 </div>
 
                 <button type = "submit"> Adauga Atractie </button>
