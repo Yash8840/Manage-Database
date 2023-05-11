@@ -99,12 +99,24 @@ exports.place_create_post  = async (req, res) => {
                         data: dataFiles, 
                         contentType: "image/jpg", 
                     }, 
-                    history: req.body.history, 
-                    contact: req.body.contact, 
-                    city: req.body.city, 
-                    adress: req.body.adress, 
                 });         
     
+                if(req.body.history) { 
+                    place.history = req.body.history
+                }; 
+
+                if(req.body.contact) { 
+                    place.contact = req.body.contact; 
+                }
+
+                if(req.body.city) { 
+                    place.city = req.body.city; 
+                }; 
+
+                if(req.body.adress) { 
+                    place.adress = req.body.adress; 
+                }
+
                 console.log("DONE"); 
                 await place.save(); 
                 res.status(200).json({ place: place, message: "Successfully uploaded"}); 

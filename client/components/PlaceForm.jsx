@@ -208,7 +208,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                     <textarea {...register("history")} name="history" 
                         onChange = { e => setHistory(e.target.value )} 
                         id="history" cols="30"
-                        rows="10" required></textarea>
+                        rows="10"></textarea>
                 </div>
 
                 <div className="form-group">
