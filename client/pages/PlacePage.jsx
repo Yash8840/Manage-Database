@@ -3,13 +3,26 @@ import fetchData from "../helpers/fetchData";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { Buffer } from "buffer"; 
+import generateRandomKey from "../helpers/randomKey";
 
 const PlacePage = () => { 
     const location = useLocation(); 
     const navigate = useNavigate(); 
     const [ data, setData ] = useState({}); 
     const [ city, setCity ] = useState({}); 
-    const [ successDeleteMessage, setSuccessDeleteMessage ] = useState("");  
+    const [ images, setImages ] = useState([]); 
+
+    const formatImages = (array) => { 
+        const result = []; 
+            array.forEach(dataBuffer => { 
+                const base64image = Buffer.from(dataBuffer.data, 'base64').toString("base64"); 
+                result.push(`data:image/jpeg;base64,${base64image}`); 
+            }); 
+        
+
+        return result; 
+    }
 
     useEffect (() => {
         const renderData = async () => { 
@@ -17,8 +30,9 @@ const PlacePage = () => {
             setData(res.place); 
             if(res.city) { 
                 setCity(res.city[0])
+                setImages(formatImages(res.place.photo.data)); 
             }
-            console.log(res); 
+            console.log(res.place); 
         }
 
         renderData(); 
@@ -36,14 +50,12 @@ const PlacePage = () => {
             })
 
             if(res.status !== 200) { 
-                setSuccessDeleteMessage("You have an error in your code - STATUS error."); 
                 return; 
             }
 
             navigate("/cities"); 
         } catch(err) { 
             console.log(err); 
-            setSuccessDeleteMessage("You have an error in your code."); 
         }
     }
     return ( 
@@ -66,8 +78,14 @@ const PlacePage = () => {
                     </>
                 }
 
-                    <p>a</p>
                     <NavLink to = { `/cities/${city._id}`}> { city.title }</NavLink> 
+
+                
+                    {images.map(image => { 
+                        return ( 
+                            <img src= { image } alt="X" key={ generateRandomKey(20)} />
+                        )
+                    })}
                 <hr />
                 { data.contact && 
                     <p className="info contact">Contact: { data.contact } </p>
@@ -80,6 +98,6 @@ const PlacePage = () => {
 
         </section>
     )
-}; 
+}
 
 export default PlacePage; 
