@@ -1,4 +1,6 @@
 const { body, validationResult } = require("express-validator"); 
+const upload = require("../middleware/upload_multer"); 
+const fs = require("fs"); 
 
 const Place = require("../models/place");
 const City = require("../models/city");
@@ -35,76 +37,81 @@ exports.place_create_get= (req, res, next) => {
     res.status(200).json({ pageTitle: "Creeaza Atractie"}); 
 }; 
 
-exports.place_create_post = [ 
-    body("title", "Title is required") 
-        .trim() 
-        .isLength({min: 1})
-        .escape (), 
-    body("description", "Description is required")
-        .trim() 
-        .isLength({ min: 1 }) 
-        .escape(), 
-    body("type", "Type is required")
-        .trim() 
-        .isLength({ min: 1 })
-        .escape(), 
-    body("photo") 
-        .trim() 
-        .optional({ checkFalsy: true })
-        .escape(), 
-    body("history")
-        .trim() 
-        .optional({ checkFalsy: true }) 
-        .escape(), 
-    body("contact") 
-        .trim() 
-        .optional({ checkFalsy: true })
-        .escape(), 
-    body("city")
-        .trim() 
-        .optional({ checkFalsy: true })
-        .escape(), 
-    body("adress")
-        .trim()
-        .optional({ checkFalsy: true })
-        .isString()
-        .escape(), 
+/* 
+body("title", "Title is required") 
+.trim() 
+.isLength({min: 1})
+.escape (), 
+body("description", "Description is required")
+.trim() 
+.isLength({ min: 1 }) 
+.escape(), 
+body("type", "Type is required")
+.trim() 
+.isLength({ min: 1 })
+.escape(), 
+body("photo") 
+.trim() 
+.optional({ checkFalsy: true })
+.escape(), 
+body("history")
+.trim() 
+.optional({ checkFalsy: true }) 
+.escape(), 
+body("contact") 
+.trim() 
+.optional({ checkFalsy: true })
+.escape(), 
+body("city")
+.trim() 
+.optional({ checkFalsy: true })
+.escape(), 
+body("adress")
+.trim()
+.optional({ checkFalsy: true })
+.isString()
+.escape(), 
 
-    async (req, res, next) => { 
-        const errors = validationResult(req); 
-        const place = new Place({ 
-            title: req.body.title, 
-            description: req.body.description, 
-            type: req.body.type, 
-            photo: req.body.photo, 
-            history: req.body.history, 
-            contact: req.body.contact, 
-            city: req.body.city, 
-            adress: req.body.adress, 
-        });         
+*/
 
-        if(!errors.isEmpty()) { 
-            res.status(403).json(
-                {
-                    pageTitle: "Creeaza Atractie", 
-                    title: place.title, 
-                    description: place.description, 
-                    type: place.type, 
-                    photo: place.photo, 
-                    history: place.history, 
-                    contact: place.contact, 
-                    city: place.city, 
-                    adress: place.adress, 
-                    errors: errors.array()
+exports.place_create_post  = async (req, res) => { 
+        upload(req, res, async (err) => { 
+            console.log(req.body); 
+            if(err)  { 
+                console.log(err);
+            }  
+            else { 
+                //Format array of files returned in req 
+                const dataFiles = []; 
+                if(req.files) { 
+                    const files = req.files;
+                    files.forEach(file => { 
+                        dataFiles.push(fs.readFileSync(`../uploads/${files[files.indexOf(file)].filename}`)); 
+                    }); 
+    
                 }
-            ); 
-        }
-        
-        console.log("DONE"); 
-        await place.save(); 
-        res.status(200).send(place); 
+                //Creating new place
+                const place = new Place({ 
+                    title: req.body.title, 
+                    description: req.body.description, 
+                    type: req.body.type, 
+                    photo: { 
+                        data: dataFiles, 
+                        contentType: "image/jpg", 
+                    }, 
+                    history: req.body.history, 
+                    contact: req.body.contact, 
+                    city: req.body.city, 
+                    adress: req.body.adress, 
+                });         
+    
+                console.log("DONE"); 
+                await place.save(); 
+                res.status(200).json({ place: place, message: "Successfully uploaded"}); 
+            }
+        })
     }
-]
+
 
 exports.place_delete_post = async (req, res, next) => { 
     const place = await Place.findById(req.params.id); 
