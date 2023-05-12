@@ -12,7 +12,14 @@ const PlaceSchema = new Schema({
     history: { type: String, minLength: 1, maxLength: 30000 }, 
     contact: { type: String, minLength: 1, maxLength: 100 },
     city: { type: String, minLength: 1 }, 
-    adress: { type: String, minLength: 1 }, 
+    adress: { type: String, minLength: 1 },
+    restaurant: { 
+        program: { type: String, minLength: 1, required: true }, 
+        menu: { 
+            data: [ Buffer ], 
+            contentType: String, 
+        }
+    }
 }); 
 
 PlaceSchema.virtual("url").get(function () { 

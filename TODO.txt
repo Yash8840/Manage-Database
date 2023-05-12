@@ -1,10 +1,16 @@
 - cautare atractii dupa tip
 
-- PLACE: city as an input with serach in database 
 - Update place object(+ input in functie de tip)
     ex. if(place.type == restaurant) { 
         show restaurant types... 
     }
+
+Format obiect restaurant / hotel 
+{Nume}
+{Meniu}
+{Telefon}
+{Adresa}
+{Program}
 
 - Format Photos With Glider
 - Sitem trasee 
