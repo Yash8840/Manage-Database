@@ -143,7 +143,7 @@ const CityForm = () => {
 
     return( 
         <section className="form">
-            <form action="http://localhost:3000/api/cities/create" method="POST" onSubmit = { () => { handleSubmit(submitForm)}} >
+            <form action="http://localhost:3000/api/cities/create" className="main-form" method="POST" onSubmit = { () => { handleSubmit(submitForm)}} >
                 <div className="form-group">
                     <label htmlFor="title">Numele Orasului: </label>
                     <input 

@@ -1,0 +1,21 @@
+.main-form { 
+    display: grid; 
+    place-content: center;
+}
+
+input { 
+    background-color: red;
+}
+
+.main-form label, .main-form input { 
+    display: block; 
+}
+
+.form-group { 
+    margin: 1rem; 
+}
+
+.column {
+    float: left; 
+    width: 50%; 
+}

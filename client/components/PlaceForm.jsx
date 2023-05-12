@@ -1,7 +1,5 @@
-import React, {useState, useEffect } from "react";
-import NavBar from "./NavBar";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fetchData from "../helpers/fetchData";
 import  { useForm } from "react-hook-form"; 
 import InfoFieldMultiple from "./InfoField";
 
@@ -18,14 +16,6 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
     const [adress, setAdress] = useState([]); 
     const [formMsg, setFormMsg] = useState(""); 
     const [images, setImages] = useState([]); 
-
-    const handleFile = (e) => { 
-        console.log("FILES"); 
-        console.log(e.target.files); 
-
-        console.log("0 Files");
-        console.log(e.target.files[0])
-    }
 
     const prepareArray = (array) => { 
         const result = []; 
@@ -81,26 +71,6 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
             setFormMsg("You have an error in the code."); 
             console.log(err); 
         }
-    }
-
-    const testFormData = () => { 
-        const adressData = [];
-        adress.forEach(ad => { 
-            adressData.push(ad.text); 
-        })
-        const formData = { 
-            title, 
-            description, 
-            type, 
-            history, 
-            contact, 
-            photo: images, 
-            city, 
-            adress: adressData, 
-        }; 
-
-        console.log("TESTING FORM DATA: "); 
-        console.log(formData); 
     }
 
     const [ mainShowEdit, setMainShowEdit ] = useState(false); 
@@ -176,80 +146,82 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
 
     return( 
         <section className="form">
-            <form method="POST" action = "http://localhost:3000/api/places/create" encType="multipart/form-data" onSubmit={() => { handleSubmit(submitForm)}}>
-                <div className="form-group">
-                    <label htmlFor="title">Titlul Atractiei: </label>
-                    <input {...register ("title", { required: "required field" })} type="text" name = "title" 
-                        onChange = { (e) => setTitle(e.target.value)} />
-                </div>
+            <form method="POST" action = "http://localhost:3000/api/places/create" className="main-form" encType="multipart/form-data" onSubmit={() => { handleSubmit(submitForm)}}>
+            <article className="column">
+                    <div className="form-group">
+                        <label htmlFor="title">Titlul Atractiei: </label>
+                        <input {...register ("title", { required: "required field" })} type="text" name = "title" 
+                            onChange = { (e) => setTitle(e.target.value)} />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="description">Descrierea atractiei: </label>
-                    <textarea {...register ("description", { required: "required field" })} name="description" id="description" cols="30" rows="10" 
-                        onChange = { e => setDescription(e.target.value)}
-                        required></textarea>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="description">Descrierea atractiei: </label>
+                        <textarea {...register ("description", { required: "required field" })} name="description" id="description" cols="30" rows="10" 
+                            onChange = { e => setDescription(e.target.value)}
+                            required></textarea>
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="type">Tipul atractiei</label>
-                    <select {...register ("type", { required: "required field" })}
-                        onChange = { e => { setType(e.target.value)}}
-                        name="type" id="type">
-                        { placeTypes.length > 0 && placeTypes.map(type => { 
-                            return ( 
-                                <option key =  { type } value= { type }> {type } </option>
-                            )
-                        })}
-                    </select>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="type">Tipul atractiei</label>
+                        <select {...register ("type", { required: "required field" })}
+                            onChange = { e => { setType(e.target.value)}}
+                            name="type" id="type">
+                            { placeTypes.length > 0 && placeTypes.map(type => { 
+                                return ( 
+                                    <option key =  { type } value= { type }> {type } </option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                </article>
 
-                <div className="form-group">
-                    <label htmlFor="history">Istoria atractiei (optional): </label>
-                    <textarea {...register("history")} name="history" 
-                        onChange = { e => setHistory(e.target.value )} 
-                        id="history" cols="30"
-                        rows="10"></textarea>
-                </div>
+                <article className="column">
+                    <div className="form-group">
+                        <label htmlFor="history">Istoria atractiei (optional): </label>
+                        <textarea {...register("history")} name="history" 
+                            onChange = { e => setHistory(e.target.value )} 
+                            id="history" cols="30"
+                            rows="10"></textarea>
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="contact">Date de contact (la alegere): </label>
-                    <input
-                        {...register("contact")}
-                        onChange = { (e) => setContact(e.target.value)}
-                        type="text" name = "contact" />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="contact">Date de contact (la alegere): </label>
+                        <input
+                            {...register("contact")}
+                            onChange = { (e) => setContact(e.target.value)}
+                            type="text" name = "contact" />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="city">Selecteaza Orasul(optional): </label>
-                    <input {...register("city")}
-                        onChange = { e =>  { setCity(e.target.value)} }
-                        name="city" id="city"/>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="city">Selecteaza Orasul(optional): </label>
+                        <input {...register("city")}
+                            onChange = { e =>  { setCity(e.target.value)} }
+                            name="city" id="city"/>
+                    </div>
 
-                <div className="form-group"> 
-                    <input type="hidden" {...register("adress")} value = { prepareArray(adress) } />
-                    <InfoFieldMultiple 
-                        name = "Adresa / Adresele locatiei: " 
-                        description = "" 
-                        informations = { adress } 
-                        handleCancel = { handleCancel } 
-                        handleCancelOne = { handleCancelOne } 
-                        showEditHandler = { showEditHandler } 
-                        showMainEditHandler = { showMainEditHandler }
-                        handleDelete = { handleDelete }
-                        addMainInfoHandler = { addMainInfoHandler }
-                        handleEdit = { handleEdit }
-                        mainShowEdit = { mainShowEdit } /> 
-                </div>
+                    <div className="form-group"> 
+                        <input type="hidden" {...register("adress")} value = { prepareArray(adress) } />
+                        <InfoFieldMultiple 
+                            name = "Adresa / Adresele locatiei: " 
+                            description = "" 
+                            informations = { adress } 
+                            handleCancel = { handleCancel } 
+                            handleCancelOne = { handleCancelOne } 
+                            showEditHandler = { showEditHandler } 
+                            showMainEditHandler = { showMainEditHandler }
+                            handleDelete = { handleDelete }
+                            addMainInfoHandler = { addMainInfoHandler }
+                            handleEdit = { handleEdit }
+                            mainShowEdit = { mainShowEdit } /> 
+                    </div>
 
-                <div>
-                        <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo[]" />
-                </div>
+                    <div>
+                            <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo[]" />
+                    </div>
+                </article>
 
                 <button type = "submit"> Adauga Atractie </button>
             </form>
-
-            <button onClick = { testFormData } > Press </button>
         </section>
     )
 }; 

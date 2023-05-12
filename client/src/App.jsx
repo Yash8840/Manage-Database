@@ -11,6 +11,7 @@ import CityPage from "../pages/CityPage";
 import UpdateCity from "../pages/UpdateCity";
 import UpdatePlace from "../pages/UpdatePlace";
 import "../css/main.css"; 
+import  "../css/formMain.css"; 
 
 const App = () => { 
   return( 
