@@ -52,6 +52,7 @@ router.delete("/profiles/:id", user_controller.user_delete);
 
 router.get("/roads/create", road_controller.road_create_get); 
 router.post("/roads/create", road_controller.road_create_post); 
+router.post("/roads/create/placelist", place_controller.place_list); 
 
 router.get("/roads/:id/update", road_controller.road_update_get); 
 router.put("/roads/:id/update", road_controller.road_update_put);

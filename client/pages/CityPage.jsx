@@ -74,6 +74,7 @@ const CityPage = () => {
             <article className="developer-area">
                 <h2> { data.title } </h2>
                 <button onClick={ handleDelete }> Sterge Oras </button>
+                <p> Daca stergi acest oras, vei sterge toate atractiile ale acestuia. </p>
                 <NavLink to = {{pathname: `/cities/${data._id}/update`}}> Actualizeaza informatii </NavLink>
             </article>
             <hr />
