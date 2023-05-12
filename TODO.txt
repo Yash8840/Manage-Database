@@ -1,20 +1,7 @@
 - cautare atractii dupa tip
 
-- Update place object(+ input in functie de tip)
-    ex. if(place.type == restaurant) { 
-        show restaurant types... 
-    }
-
-Format obiect restaurant / hotel 
-{Nume}
-{Meniu}
-{Telefon}
-{Adresa}
-{Program}
-
 - Format Photos With Glider
 - Sitem trasee 
 - Sistem evenimente(Upcoming events - CRUD) 
-
 
 - Cand stergi un oras se sterg toate locatiile (si traseele cu acel oras)

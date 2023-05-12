@@ -1,5 +1,6 @@
 const { body, validationResult } = require('express-validator'); 
 const fs = require("fs"); 
+const async = require("async"); 
 
 const City = require("../models/city"); 
 const Place = require("../models/place"); 
@@ -114,11 +115,30 @@ exports.city_delete_post = async (req, res, next) => {
     if(city == null) { 
         res.status(403); 
     } else { 
-        await City.findByIdAndDelete(req.params.id); 
-        res.status(200).json({ 
-            message: "city deleted", 
-            city, 
-        })
+        async.parallel(
+            {
+                async city() { 
+                    const c = await City.findByIdAndDelete(req.params.id); 
+                    return c; 
+                }, 
+
+                async places () { 
+                    const p = await Place.deleteMany({ city: city.title }); 
+                    return p; 
+                }
+            }, (err, results) => { 
+                if(err) { 
+                    console.log(err); 
+                } else { 
+                    console.log(results.places); 
+                    console.log(results.city); 
+                    res.status(200).json({ 
+                        message: "city deleted", 
+                        city: results.city, 
+                    })
+                }
+            }
+        )
     }
 }; 
 
