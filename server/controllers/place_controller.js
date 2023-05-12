@@ -103,8 +103,9 @@ exports.place_create_post  = async (req, res) => {
                     files.forEach(file => { 
                         dataFiles.push(fs.readFileSync(`../uploads/${files[files.indexOf(file)].filename}`)); 
                     }); 
-    
                 }
+
+                console.log(req.files); 
                 //Creating new place
                 const place = new Place({ 
                     title: req.body.title, 
@@ -130,6 +131,10 @@ exports.place_create_post  = async (req, res) => {
 
                 if(req.body.adress) { 
                     place.adress = req.body.adress; 
+                }
+
+                if(req.body.program) { 
+                    place.program = req.body.program; 
                 }
 
                 console.log("DONE"); 

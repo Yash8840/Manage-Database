@@ -15,6 +15,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
     const [city, setCity] = useState(""); 
     const [adress, setAdress] = useState([]); 
     const [formMsg, setFormMsg] = useState(""); 
+    const [program, setProgram] = useState(""); 
     const [images, setImages] = useState([]); 
 
     const prepareArray = (array) => { 
@@ -39,6 +40,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
             photo: images, 
             history, 
             contact, 
+            program, 
             city, 
             adress: adressData, 
         }; 
@@ -190,6 +192,12 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                             {...register("contact")}
                             onChange = { (e) => setContact(e.target.value)}
                             type="text" name = "contact" />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="program">Program: </label>
+                        <textarea {...register("program")}
+                            onChange = { e => setProgram(e.target.value)} name="program" id="" cols="30" rows="10"></textarea>
                     </div>
 
                     <div className="form-group">

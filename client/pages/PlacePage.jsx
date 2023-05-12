@@ -86,6 +86,10 @@ const PlacePage = () => {
                             <img src= { image } alt="X" key={ generateRandomKey(20)} />
                         )
                     })}
+
+                { data.program && 
+                    <p className="info program"> PROGRAM: { data.program } </p>
+                }
                 <hr />
                 { data.contact && 
                     <p className="info contact">Contact: { data.contact } </p>
