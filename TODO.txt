@@ -1,9 +1,12 @@
-- API: add photo system 
-https://www.youtube.com/watch?v=GyzC-30Bqfc
-
-
-- vector de adrese 
 - cautare atractii dupa tip
 
 - PLACE: city as an input with serach in database 
-- City: components problem 
+- Update place object(+ input in functie de tip)
+    ex. if(place.type == restaurant) { 
+        show restaurant types... 
+    }
+
+- Debug sistem for now (Search place by name)
+- Format Photos With Glider
+- Sitem trasee 
+- Sistem evenimente(Upcoming events - CRUD) 
