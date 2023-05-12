@@ -12,7 +12,7 @@ const CityForm = () => {
     const [surface, setSurface] = useState(0); 
     const [history, setHistory] = useState(""); 
     const [population, setPopulation] = useState(""); 
-    const [message, setMessage] = useState("");
+    const [images, setImages] = useState([]); 
     
     const prepareArray = (array) => { 
         const result = []; 
@@ -23,50 +23,49 @@ const CityForm = () => {
         return result; 
     }
 
-
     const submitForm = async () => { 
-        const formData = JSON.stringify({ 
+        const formData = { 
             title, 
             components,  
             description, 
+            photo: images, 
             surface, 
             history, 
             population 
-        }); 
+        }; 
 
         try { 
             const req = await fetch("http://localhost:3000/api/cities/create", { 
                 method: "POST", 
                 mode: "cors", 
-                body: formData, 
+                body: JSON.stringify(formData), 
                 headers: { 
                     "Content-Type": "application/json"
                 }
             })
 
             if(req.status !== 200) { 
-                setMessage(`You have an error: ${req.status}`); 
                 return; 
             }
 
             console.log(`City ${title} addded`); 
-            setMessage("Success added"); 
         } catch(err){ 
-            setMessage("err");
+            console.log(err); 
         }
     }
  
     const testForm = () => { 
-        const formData = JSON.stringify({ 
+        const formData = { 
             title, 
             components, 
             description, 
+            photo: images, 
             surface, 
             history, 
             population 
-        }) 
+        }
 
-        console.log(formData)
+        console.log(formData); 
     }
 
     /*  info field */
@@ -143,7 +142,8 @@ const CityForm = () => {
 
     return( 
         <section className="form">
-            <form action="http://localhost:3000/api/cities/create" className="main-form" method="POST" onSubmit = { () => { handleSubmit(submitForm)}} >
+            <form action="http://localhost:3000/api/cities/create" 
+                encType="multipart/form-data" className="main-form" method="POST" onSubmit = { () => { handleSubmit(submitForm)}} >
                 <div className="form-group">
                     <label htmlFor="title">Numele Orasului: </label>
                     <input 
@@ -200,12 +200,17 @@ const CityForm = () => {
                         type="number" min = { 100 } />
                 </div>
 
+                <div className = "form-group">
+                    <input type="file" name = "photo[]"
+                        multiple onChange = { (e) => {  setImages(e.target.files);   console.log(images)}  }/>
+                </div>
+
                 <article className="button-holder">
                     <button type = "submit">Creeaza Oras</button>
                 </article>
+                <button type = "button" onClick = { testForm }> Testeaza </button>
             </form>
 
-            <button onClick = { testForm }> Testeaza </button>
         </section>
     )
 }; 
