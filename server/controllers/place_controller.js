@@ -7,12 +7,27 @@ const City = require("../models/city");
 const PLACE_TYPES = require("../global/place_types"); 
 
 exports.place_list = async (req, res, next) => { 
-    const places = await Place.find({}, "title").exec(); 
-    if(places == null) { 
-        res.status(403); 
-    } else { 
-        res.status(200).json({ places }); 
+    const places = await Place.find({}, { title: 1, type: 1 }).exec(); 
+    let placesInOrder = {}; 
+
+    for(let i = 0; i < PLACE_TYPES.length; i++) { 
+        placesInOrder[`${PLACE_TYPES[i]}`] = []; 
     }
+
+    console.log(places); 
+
+    console.log(placesInOrder); 
+    
+    for(let i = 0; i < PLACE_TYPES.length; i++) { 
+        for(let j = 0; j < places.length; j++) { 
+            console.log(places[j].type);
+            if(places[j].type == PLACE_TYPES[i]) { 
+                placesInOrder[`${PLACE_TYPES[i]}`].push(places[j]); 
+            }
+        }
+    }; 
+
+    res.status(200).send({ place: placesInOrder }); 
 }; 
 
 exports.place_types = (req, res, next) => {

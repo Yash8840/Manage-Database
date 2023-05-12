@@ -6,7 +6,9 @@
         show restaurant types... 
     }
 
-- Debug sistem for now (Search place by name)
 - Format Photos With Glider
 - Sitem trasee 
 - Sistem evenimente(Upcoming events - CRUD) 
+
+
+- Cand stergi un oras se sterg toate locatiile (si traseele cu acel oras)

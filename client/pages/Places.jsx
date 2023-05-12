@@ -1,9 +1,11 @@
 import React, { useState, useEffect} from "react";
-import NavBar from "../components/NavBar";
+import generateRandomKey from "../helpers/randomKey";
 import Place from "../components/Place";
 
 const Places = () =>  {
-    const [data, setData] = useState( {}); 
+    const [ placeKeys, setPlaceKeys ] = useState([]); 
+    const [ placeValues, setPlaceValues ] = useState([]); 
+
     useEffect( () => { 
         const fetchData = async () => { 
             const result = await fetch("http://localhost:3000/api/places", { 
@@ -11,7 +13,8 @@ const Places = () =>  {
             });  
 
             const res = await result.json(); 
-            setData(res); 
+            setPlaceKeys(Object.keys(res.place)); 
+            setPlaceValues(Object.values(res.place)); 
         }
 
         fetchData (); 
@@ -19,7 +22,22 @@ const Places = () =>  {
 
     return ( 
         <section className="page places-page">
-            <pre> { JSON.stringify (data) } </pre>
+            { placeKeys.map(type => { 
+                return( 
+                    <>
+                        <h2 key = { generateRandomKey(20)}> { type } </h2>
+                        { placeValues[ placeKeys.indexOf(type)].map(value => { 
+                            return ( 
+                                <article key = { value._id}>
+                                    <Place id = { value._id} title = { value.title }/>
+                                </article>
+                            ) 
+                        })}
+
+                        <hr />
+                    </>
+                )
+            })}
         </section>
     )
 }; 
