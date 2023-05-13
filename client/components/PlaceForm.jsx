@@ -228,7 +228,9 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
                     </div>
                 </article>
 
-                <button type = "submit"> Adauga Atractie </button>
+                <article className = "button-holder">
+                    <button type = "submit"> Adauga Atractie </button>
+                </article>
             </form>
         </section>
     )

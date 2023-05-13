@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import generateRandomKey from "../helpers/randomKey";
-import Place from "../components/Place";
+import RoadSelect from "../components/RoadSelect";
 
 const SelectPlace = () =>  {
     const [ placeKeys, setPlaceKeys ] = useState([]); 
@@ -24,7 +24,7 @@ const SelectPlace = () =>  {
         <section className="page places-page">
             { placeKeys.map(type => { 
                 return( 
-                    <>
+                    <article key = { generateRandomKey(20)}>
                         <h2 key = { generateRandomKey(20)}> { type } </h2>
                         { placeValues[ placeKeys.indexOf(type)].map(value => { 
                             return ( 
@@ -35,7 +35,7 @@ const SelectPlace = () =>  {
                         })}
 
                         <hr />
-                    </>
+                    </article>
                 )
             })}
         </section>

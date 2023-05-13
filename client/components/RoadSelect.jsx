@@ -4,7 +4,9 @@ const RoadSelect = ({ id, title }) => {
     return( 
         <article className="road-select">
             <p> { title } </p>
-            <button> Selecteaza </button>
+            <button type = "button"> Selecteaza </button>
         </article>
     )
-}
+}; 
+
+export default RoadSelect 

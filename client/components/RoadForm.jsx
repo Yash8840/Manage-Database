@@ -43,7 +43,7 @@ const RoadForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <button onClick = { () => { setShowPlacesPage(true)}}>Adauga Atractie</button>
+                    <button type = "button" onClick = { () => { setShowPlacesPage(true)}}>Adauga Atractie</button>
 
                     { showPlacesPage && 
                         <SelectPlace /> 
@@ -53,6 +53,10 @@ const RoadForm = () => {
                 <div className="form-group">
                     <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo" />
                 </div>
+
+                <article className="button-holder">
+                    <button type = "submit"> Creeaza traseu </button>
+                </article>
             </form>
         </section>
     )

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"); 
-const Schema = monogoose.Schema; 
+const Schema = mongoose.Schema; 
 
 const RoadSchema = new Schema({ 
     title: { type: String, minLength: 1, required: true}, 
