@@ -33,7 +33,7 @@ const RoadForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo" />
+                    <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo[]" />
                 </div>
             </form>
         </section>
