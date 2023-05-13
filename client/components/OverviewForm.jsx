@@ -25,7 +25,7 @@ const Overview = (props) => {
                             info.showEdit && 
                             <>
                                 <Editor info = { info } onEditInfo = { onEditInfo }/> 
-                                <button onClick = { () => onCancelOne(info)} > Anuleaza Editarea </button>
+                                <button type = "button" onClick = { () => onCancelOne(info)} > Anuleaza Editarea </button>
                             </>
                         }
                     </article>

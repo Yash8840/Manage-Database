@@ -1,5 +1,5 @@
 const Road = require("../models/road"); 
-import upload from "../middleware/upload_multer";
+const upload = require("../middleware/upload_multer"); 
 
 exports.roads_list = async (req, res, next) => { 
     try { 
