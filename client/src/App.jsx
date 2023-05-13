@@ -10,6 +10,9 @@ import PlacePage from "../pages/PlacePage";
 import CityPage from "../pages/CityPage";
 import UpdateCity from "../pages/UpdateCity";
 import UpdatePlace from "../pages/UpdatePlace";
+import Roads from "../pages/Roads";
+import RoadManage from "../pages/RoadManage";
+import RoadPage from "../pages/RoadPage";
 import "../css/main.css"; 
 import  "../css/formMain.css"; 
 
@@ -18,18 +21,22 @@ const App = () => {
     <section className="app"> 
       <NavBar/> 
       <Routes>
+        {/* List Routes */}
         <Route path = "/" element = { <HomePage />} />
         <Route path = "/places" element = { <Places /> } />
         <Route path = "/cities" element = { <Cities />} />
+        <Route path = "/roads" element = { <Roads /> } /> 
         {/* Manage Routes*/}
         <Route path = "/places/create" element = { <PlaceManage /> }/>
         <Route path = "/cities/create" element = { <CityManage /> } />  
+        <Route path = "/roads/create" element = { <RoadManage /> } /> 
 
         {/* Detail Routes*/}
         <Route path = "/places/:id" element = { <PlacePage />} /> 
         <Route path = "/cities/:id" element = { <CityPage /> } /> 
         <Route path = "/places/:id/update" element = { <UpdatePlace /> } /> 
         <Route path = "/cities/:id/update" element = { <UpdateCity /> } /> 
+        <Route path = "/roads/:id" element = { <RoadPage /> } /> 
       </Routes>
     </section>
   )

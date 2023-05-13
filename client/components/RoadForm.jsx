@@ -1,17 +1,31 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import SelectPlace from "../pages/SelectPlace";
 
 const RoadForm = () => {
-    const navigate = useNavigate(); 
     const { register, handleSubmit } = useForm();
-    
+
     const [ title, setTitle ] = useState(""); 
     const [ description, setDescription ] = useState(""); 
     const [ images, setImages ] = useState([]); 
+    const [ placesInRoad, setPlacesInRoad ] = useState([]); 
+
+    const [ showPlacesPage, setShowPlacesPage ] = useState(false);  
+    const [ selectedPlaces, setSelectedPlaces ] = useState({}); 
+
+    const handleSelectPlace = (place) => { 
+        let selectedPlacesAdd = [...selectedPlaces]; 
+        selectedPlacesAdd.push(place); 
+        setSelectedPlaces(selectedPlacesAdd); 
+
+        let placesInRoadAdd = [...placesInRoad]; 
+        placesInRoadAdd.push(place._id); 
+        setPlacesInRoad(placesInRoadAdd); 
+    } 
     
-    const submitForm = () => { 
-        console.log("Submitted"); 
+    const submitForm = async () => { 
+
     }
     return( 
         <section>
@@ -29,7 +43,11 @@ const RoadForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <button onClick = { navigate("/roads/create/placelist")}>Adauga Atractie</button>
+                    <button onClick = { () => { setShowPlacesPage(true)}}>Adauga Atractie</button>
+
+                    { showPlacesPage && 
+                        <SelectPlace /> 
+                    }
                 </div>
 
                 <div className="form-group">
