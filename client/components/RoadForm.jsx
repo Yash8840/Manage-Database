@@ -9,27 +9,68 @@ const RoadForm = () => {
     const [ title, setTitle ] = useState(""); 
     const [ description, setDescription ] = useState(""); 
     const [ images, setImages ] = useState([]); 
-    const [ placesInRoad, setPlacesInRoad ] = useState([]); 
+    const [ placesId, setPlacesId ] = useState([]); 
 
     const [ showPlacesPage, setShowPlacesPage ] = useState(false);  
-    const [ selectedPlaces, setSelectedPlaces ] = useState({}); 
+    const [ selectedPlaces, setSelectedPlaces ] = useState([]); 
+
+    const [ messagePlaceExists, setMessagePlaceExists ] = useState(""); 
 
     const handleSelectPlace = (place) => { 
         let selectedPlacesAdd = [...selectedPlaces]; 
-        selectedPlacesAdd.push(place); 
-        setSelectedPlaces(selectedPlacesAdd); 
+        if(selectedPlacesAdd.includes(place.title)) { 
+            setMessagePlaceExists("Atractia se afla deja in traseu"); 
+        } else { 
+            selectedPlacesAdd.push(place.title); 
+            setSelectedPlaces(selectedPlacesAdd); 
 
-        let placesInRoadAdd = [...placesInRoad]; 
-        placesInRoadAdd.push(place._id); 
-        setPlacesInRoad(placesInRoadAdd); 
+            let placesInRoadAdd = [...placesId]; 
+            placesInRoadAdd.push(place.id); 
+            setPlacesId(placesInRoadAdd); 
+
+            setShowPlacesPage(false); 
+        }
     } 
+
+    const handleCancelShowPlaces = () => { 
+        setShowPlacesPage(false); 
+    }
     
     const submitForm = async () => { 
+        const formData = { 
+            title, 
+            description, 
+            places: [...placesId], 
+            photo: images, 
+        }; 
 
+        const req = await fetch("http://localhost:3000/api/roads/create", { 
+            method: "post", 
+            mode: "cors", 
+            body: JSON.stringify(formData),
+            headers: { 
+                "Content-Type": "application/json", 
+            }
+        }); 
+
+        if(req.status !== 200) { 
+            return;  
+        } 
+    }
+
+    const testRoadObjectInConsole = () => { 
+        const roadDetails = { 
+            title, 
+            description, 
+            places: placesId, 
+            photo: images, 
+        }; 
+
+        console.log(JSON.stringify(roadDetails)); 
     }
     return( 
         <section>
-            <form action="" method = "POST" encType="multipart/form-data" onSubmit = { () => { handleSubmit(submitForm)}}>
+            <form action="http://localhost:3000/api/roads/create" method = "POST" encType="multipart/form-data" onSubmit = { () => { handleSubmit(submitForm)}}>
                 <div className="form-group">
                     <label htmlFor="title">Alege un nume pentru traseu</label>
                     <input {...register("title", { required : "required field" } ) } type="text" 
@@ -46,7 +87,7 @@ const RoadForm = () => {
                     <button type = "button" onClick = { () => { setShowPlacesPage(true)}}>Adauga Atractie</button>
 
                     { showPlacesPage && 
-                        <SelectPlace /> 
+                        <SelectPlace onCancelShowPages = { handleCancelShowPlaces }  onSelectPlace = { handleSelectPlace } /> 
                     }
                 </div>
 
@@ -58,6 +99,10 @@ const RoadForm = () => {
                     <button type = "submit"> Creeaza traseu </button>
                 </article>
             </form>
+
+            <article className = "test">
+                <button onClick = { testRoadObjectInConsole }> Previzualizeaza </button>
+            </article>
         </section>
     )
 }; 

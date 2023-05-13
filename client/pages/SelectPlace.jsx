@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import generateRandomKey from "../helpers/randomKey";
 import RoadSelect from "../components/RoadSelect";
 
-const SelectPlace = () =>  {
+const SelectPlace = ( { onSelectPlace, onCancelShowPages }) =>  {
     const [ placeKeys, setPlaceKeys ] = useState([]); 
     const [ placeValues, setPlaceValues ] = useState([]); 
 
@@ -29,7 +29,7 @@ const SelectPlace = () =>  {
                         { placeValues[ placeKeys.indexOf(type)].map(value => { 
                             return ( 
                                 <article key = { value._id}>
-                                    <RoadSelect id = { value._id} title = { value.title }/>
+                                    <RoadSelect onSelectPlace = { onSelectPlace } id = { value._id} title = { value.title }/>
                                 </article>
                             ) 
                         })}
@@ -38,6 +38,10 @@ const SelectPlace = () =>  {
                     </article>
                 )
             })}
+
+            <article className="button-holder">
+                <button type = "button" onClick = { onCancelShowPages }> Anuleaza </button>
+            </article>
         </section>
     )
 }; 

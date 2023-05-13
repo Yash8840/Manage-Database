@@ -1,5 +1,9 @@
 const Road = require("../models/road"); 
 const upload = require("../middleware/upload_multer"); 
+const fs = require("fs");
+const mongoose = require("mongoose");    
+
+//TODO: images + places error (posibil de la cum se formeaza vectorul)
 
 exports.roads_list = async (req, res, next) => { 
     try { 
@@ -29,41 +33,37 @@ exports.road_create_get = (req, res, next) => {
 exports.road_create_post = async (req, res, next) => {
     upload(req, res, async(err) => { 
         if(err) { 
-            console.log(err); 
             console.log(req.body); 
-            console.log(req.files); 
+            console.log(err); 
         } else { 
-            const dataFiles = []; 
-            if(req.files) { 
-                const files = req.files;
-                files.forEach(file => { 
-                    dataFiles.push(fs.readFileSync(`../uploads/${files[files.indexOf(file)].filename}`)); 
-                }); 
-            }; 
-
             const placesDocs = []; 
-            if(req.body.places) { 
-                const places = req.body.places; 
-                places.forEach(place => { 
-                    placesDocs.push(place._id); 
-                })
-            }; 
+            console.log("body"); 
+            console.log(req.body); 
 
             const newRoad = new Road({ 
                 title: req.body.title,  
                 description: req.body.description, 
                 places:  placesDocs, 
+            }); 
 
-                photo: { 
+            if(req.files) { 
+                const dataFiles = []; 
+                const files = req.files;
+                files.forEach(file => { 
+                    dataFiles.push(fs.readFileSync(`../uploads/${files[files.indexOf(file)].filename}`)); 
+                }); 
+
+                newRoad.photo = { 
                     data: dataFiles, 
                     contentType: "image/jpg", 
                 }
-            }); 
+            }; 
+
 
             await newRoad.save(); 
             res.status(200).json({ successfull_message: "Road added."}); 
-        }
-    })
+        
+    } } )
 }
 
 exports.road_delete = async (req, res, next) => { 

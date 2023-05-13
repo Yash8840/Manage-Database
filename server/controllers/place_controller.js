@@ -14,10 +14,6 @@ exports.place_list = async (req, res, next) => {
         placesInOrder[`${PLACE_TYPES[i]}`] = []; 
     }
 
-    console.log(places); 
-
-    console.log(placesInOrder); 
-    
     for(let i = 0; i < PLACE_TYPES.length; i++) { 
         for(let j = 0; j < places.length; j++) { 
             console.log(places[j].type);
@@ -105,7 +101,6 @@ exports.place_create_post  = async (req, res) => {
                     }); 
                 }
 
-                console.log(req.files); 
                 //Creating new place
                 const place = new Place({ 
                     title: req.body.title, 

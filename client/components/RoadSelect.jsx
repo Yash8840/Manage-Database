@@ -1,10 +1,10 @@
 import React from "react";
 
-const RoadSelect = ({ id, title }) => { 
+const RoadSelect = ({ id, title, onSelectPlace }) => { 
     return( 
         <article className="road-select">
             <p> { title } </p>
-            <button type = "button"> Selecteaza </button>
+            <button onClick = { () => { onSelectPlace({ id, title })}} type = "button"> Selecteaza </button>
         </article>
     )
 }; 
