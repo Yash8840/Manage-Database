@@ -4,7 +4,7 @@ const fs = require("fs");
 
 exports.roads_list = async (req, res, next) => { 
     try { 
-        const roads = await Road.find({}).exec(); 
+        const roads = await Road.find({}, { title: 1 }).exec(); 
         res.status(200).json({roads: roads}); 
     } catch(err) { 
         console.log(err); 
