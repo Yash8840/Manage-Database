@@ -1,9 +1,6 @@
 const Road = require("../models/road"); 
 const upload = require("../middleware/upload_multer"); 
 const fs = require("fs");
-const mongoose = require("mongoose");    
-
-//TODO: images + places error (posibil de la cum se formeaza vectorul)
 
 exports.roads_list = async (req, res, next) => { 
     try { 

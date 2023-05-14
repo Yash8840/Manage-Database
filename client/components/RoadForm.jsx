@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import SelectPlace from "../pages/SelectPlace";
+import Place from "./Place";
 
 const RoadForm = () => {
     const { register, handleSubmit } = useForm();
@@ -16,16 +16,16 @@ const RoadForm = () => {
 
     const [ messagePlaceExists, setMessagePlaceExists ] = useState(""); 
 
-    const handleSelectPlace = (place) => { 
+    const handleSelectPlace = ({ id, place }) => { 
         let selectedPlacesAdd = [...selectedPlaces]; 
-        if(selectedPlacesAdd.includes(place.title)) { 
+        let placesInRoadAdd = [...placesId]; 
+        if(placesInRoadAdd.includes(id)) { 
             setMessagePlaceExists("Atractia se afla deja in traseu"); 
         } else { 
-            selectedPlacesAdd.push(place.title); 
+            selectedPlacesAdd.push(place); 
             setSelectedPlaces(selectedPlacesAdd); 
 
-            let placesInRoadAdd = [...placesId]; 
-            placesInRoadAdd.push(place.id); 
+            placesInRoadAdd.push(id); 
             setPlacesId(placesInRoadAdd); 
 
             setShowPlacesPage(false); 
@@ -95,6 +95,20 @@ const RoadForm = () => {
                 <div className="form-group">
                     <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo[]" />
                 </div>
+
+                <hr />
+                <section className="selected-roads">
+                    { selectedPlaces.map(place => { 
+                        return( 
+                            <article key = { place._id }>
+                                <Place id = { place._id } place = { place } /> 
+                            </article>
+                        )
+                    })}
+                </section>
+
+                <hr />
+                
 
                 <article className="button-holder">
                     <button type = "submit"> Creeaza traseu </button>

@@ -12,7 +12,7 @@ const PlaceSchema = new Schema({
     history: { type: String, minLength: 1, maxLength: 30000 }, 
     contact: { type: String, minLength: 1, maxLength: 100 },
     program: { type: String, minLenth: 1}, 
-    city: { type: String, minLength: 1 }, 
+    city: { type: String, minLength: 1, required: true }, 
     adress: { type: String, minLength: 1 },
 }); 
 

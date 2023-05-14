@@ -29,7 +29,7 @@ const Places = () =>  {
                         { placeValues[ placeKeys.indexOf(type)].map(value => { 
                             return ( 
                                 <article key = { value._id}>
-                                    <Place id = { value._id} title = { value.title }/>
+                                    <Place id = { value._id} place = { value }/>
                                 </article>
                             ) 
                         })}

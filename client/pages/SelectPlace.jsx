@@ -13,6 +13,7 @@ const SelectPlace = ( { onSelectPlace, onCancelShowPages }) =>  {
             });  
 
             const res = await result.json(); 
+            console.log(res);   
             setPlaceKeys(Object.keys(res.place)); 
             setPlaceValues(Object.values(res.place)); 
         }
@@ -29,7 +30,7 @@ const SelectPlace = ( { onSelectPlace, onCancelShowPages }) =>  {
                         { placeValues[ placeKeys.indexOf(type)].map(value => { 
                             return ( 
                                 <article key = { value._id}>
-                                    <RoadSelect onSelectPlace = { onSelectPlace } id = { value._id} title = { value.title }/>
+                                    <RoadSelect onSelectPlace = { onSelectPlace } id = { value._id } place = { value }/>
                                 </article>
                             ) 
                         })}

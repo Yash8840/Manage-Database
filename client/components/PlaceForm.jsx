@@ -202,7 +202,7 @@ const PlaceForm = ({ apiCities, placeTypes }) => {
 
                     <div className="form-group">
                         <label htmlFor="city">Selecteaza Orasul(optional): </label>
-                        <input {...register("city")}
+                        <input {...register("city", { required: "required field"})}
                             onChange = { e =>  { setCity(e.target.value)} }
                             name="city" id="city"/>
                     </div>
