@@ -7,6 +7,7 @@ const place_controller = require("../controllers/place_controller");
 const user_controller = require("../controllers/user_controller");
 const auth_controller = require("../controllers/auth_controller"); 
 const road_controller = require("../controllers/road_controller"); 
+const event_controller = require("../controllers/event_controller"); 
 
 router.get("/", home_controller.index); 
 
@@ -48,7 +49,6 @@ router.get("/profiles/:id",  user_controller.user_detail);
 router.delete("/profiles/:id", user_controller.user_delete); 
 
 // Road Routes. 
-// In work 
 
 router.get("/roads/create", road_controller.road_create_get); 
 router.post("/roads/create", road_controller.road_create_post); 
@@ -60,5 +60,16 @@ router.put("/roads/:id/update", road_controller.road_update_put);
 router.get("/roads", road_controller.roads_list); 
 router.get("/roads/:id", road_controller.road_detail); 
 router.delete("/roads/:id", road_controller.road_delete); 
+//Event Routes 
+
+router.get("/events/create", event_controller.create_event_get); 
+router.post("/events/create", event_controller.create_event_post); 
+
+router.get("/events/:id/update", event_controller.update_event_get); 
+router.put("/events/:id/update", event_controller.update_event_put); 
+
+router.get("/events", event_controller.event_list); 
+router.get("/events/:id", event_controller.event_detail); 
+router.delete("/events/:id", event_controller.delete_event); 
 
 module.exports = router; 
