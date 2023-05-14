@@ -40,7 +40,7 @@ const RoadForm = () => {
         const formData = { 
             title, 
             description, 
-            places: [...placesId], 
+            places: placesId, 
             photo: images, 
         }; 
 
@@ -66,7 +66,7 @@ const RoadForm = () => {
             photo: images, 
         }; 
 
-        console.log(JSON.stringify(roadDetails)); 
+        console.log(roadDetails); 
     }
     return( 
         <section>
@@ -75,6 +75,7 @@ const RoadForm = () => {
                     <label htmlFor="title">Alege un nume pentru traseu</label>
                     <input {...register("title", { required : "required field" } ) } type="text" 
                         name = "title" onChange = { e => setTitle(e.target.value) } />
+                        <input type="hidden" name = { "places" } value = { placesId } />
                 </div>
 
                 <div className="form-group">
@@ -87,12 +88,12 @@ const RoadForm = () => {
                     <button type = "button" onClick = { () => { setShowPlacesPage(true)}}>Adauga Atractie</button>
 
                     { showPlacesPage && 
-                        <SelectPlace onCancelShowPages = { handleCancelShowPlaces }  onSelectPlace = { handleSelectPlace } /> 
+                        <SelectPlace onCancelShowPages = { handleCancelShowPlaces } onSelectPlace = { handleSelectPlace } /> 
                     }
                 </div>
 
                 <div className="form-group">
-                    <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo" />
+                    <input type="file" multiple onChange = { e => setImages(e.target.files)} name = "photo[]" />
                 </div>
 
                 <article className="button-holder">

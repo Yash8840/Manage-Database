@@ -36,9 +36,8 @@ exports.road_create_post = async (req, res, next) => {
             console.log(req.body); 
             console.log(err); 
         } else { 
-            const placesDocs = []; 
-            console.log("body"); 
-            console.log(req.body); 
+            const placesDocs = req.body.places.split(","); 
+            console.log(placesDocs); 
 
             const newRoad = new Road({ 
                 title: req.body.title,  
