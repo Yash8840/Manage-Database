@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from "react";
 import generateRandomKey from "../helpers/randomKey";
-import Place from "../components/Place";
+import RoadSelect from "../components/RoadSelect";
 
-const Places = () =>  {
+const SelectPlace = ( { onSelectPlace, onCancelShowPages }) =>  {
     const [ placeKeys, setPlaceKeys ] = useState([]); 
     const [ placeValues, setPlaceValues ] = useState([]); 
 
@@ -13,6 +13,7 @@ const Places = () =>  {
             });  
 
             const res = await result.json(); 
+            console.log(res);   
             setPlaceKeys(Object.keys(res.place)); 
             setPlaceValues(Object.values(res.place)); 
         }
@@ -24,22 +25,26 @@ const Places = () =>  {
         <section className="page places-page">
             { placeKeys.map(type => { 
                 return( 
-                    <>
+                    <article key = { generateRandomKey(20)}>
                         <h2 key = { generateRandomKey(20)}> { type } </h2>
                         { placeValues[ placeKeys.indexOf(type)].map(value => { 
                             return ( 
                                 <article key = { value._id}>
-                                    <Place id = { value._id} place = { value }/>
+                                    <RoadSelect onSelectPlace = { onSelectPlace } id = { value._id } place = { value }/>
                                 </article>
                             ) 
                         })}
 
                         <hr />
-                    </>
+                    </article>
                 )
             })}
+
+            <article className="button-holder">
+                <button type = "button" onClick = { onCancelShowPages }> Anuleaza </button>
+            </article>
         </section>
     )
 }; 
 
-export default Places;
+export default SelectPlace;

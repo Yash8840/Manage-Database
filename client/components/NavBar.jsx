@@ -16,10 +16,16 @@ const NavBar = () =>  {
                     <NavLink to = "/places"> Atractii </NavLink>
                 </li>
                 <li className="navbar-element">
+                    <NavLink to = "/roads"> Trasee </NavLink>
+                </li>
+                <li className="navbar-element">
                     <NavLink to = "/places/create">Creeaza Atractie</NavLink> 
                 </li>
                 <li className="navbar-element">
                     <NavLink to = "/cities/create"> Creeaza Oras </NavLink>
+                </li>
+                <li className="navbar-element">
+                    <NavLink to = "/roads/create"> Creeaza Traseu </NavLink>
                 </li>
             </ul>
         </nav>

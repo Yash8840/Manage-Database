@@ -1,9 +1,11 @@
 const Road = require("../models/road"); 
 const upload = require("../middleware/upload_multer"); 
+const fs = require("fs");
+
 
 exports.roads_list = async (req, res, next) => { 
     try { 
-        const roads = await Road.find({}).exec(); 
+        const roads = await Road.find({}, { title: 1 }).exec(); 
         res.status(200).json({roads: roads}); 
     } catch(err) { 
         console.log(err); 
@@ -29,41 +31,36 @@ exports.road_create_get = (req, res, next) => {
 exports.road_create_post = async (req, res, next) => {
     upload(req, res, async(err) => { 
         if(err) { 
-            console.log(err); 
             console.log(req.body); 
-            console.log(req.files); 
+            console.log(err); 
         } else { 
-            const dataFiles = []; 
-            if(req.files) { 
-                const files = req.files;
-                files.forEach(file => { 
-                    dataFiles.push(fs.readFileSync(`../uploads/${files[files.indexOf(file)].filename}`)); 
-                }); 
-            }; 
-
-            const placesDocs = []; 
-            if(req.body.places) { 
-                const places = req.body.places; 
-                places.forEach(place => { 
-                    placesDocs.push(place._id); 
-                })
-            }; 
+            const placesDocs = req.body.places.split(","); 
+            console.log(placesDocs); 
 
             const newRoad = new Road({ 
                 title: req.body.title,  
                 description: req.body.description, 
                 places:  placesDocs, 
+            }); 
 
-                photo: { 
+            if(req.files) { 
+                const dataFiles = []; 
+                const files = req.files;
+                files.forEach(file => { 
+                    dataFiles.push(fs.readFileSync(`../uploads/${files[files.indexOf(file)].filename}`)); 
+                }); 
+
+                newRoad.photo = { 
                     data: dataFiles, 
                     contentType: "image/jpg", 
                 }
-            }); 
+            }; 
+
 
             await newRoad.save(); 
             res.status(200).json({ successfull_message: "Road added."}); 
-        }
-    })
+        
+    } } )
 }
 
 exports.road_delete = async (req, res, next) => { 

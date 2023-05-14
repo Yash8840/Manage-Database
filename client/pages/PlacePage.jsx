@@ -12,6 +12,7 @@ const PlacePage = () => {
     const [ data, setData ] = useState({}); 
     const [ city, setCity ] = useState({}); 
     const [ images, setImages ] = useState([]); 
+    const [ databaseCity, setDatabaseCity ] = useState(false); 
 
     const formatImages = (array) => { 
         const result = []; 
@@ -28,11 +29,17 @@ const PlacePage = () => {
         const renderData = async () => { 
             const res = await fetchData(`http://localhost:3000/api${location.pathname}`); 
             setData(res.place); 
-            if(res.city) { 
-                setCity(res.city[0])
-                setImages(formatImages(res.place.photo.data)); 
+            if(res.city.length > 0) {
+                setCity(res.city[0]); 
+                setDatabaseCity(true); 
             }
-            console.log(res.place); 
+            else { 
+                setCity({ title: res.place.city }); 
+                console.log("IN ELSE: "); 
+                console.log(res.place.city);
+            }
+
+            setImages(formatImages(res.place.photo.data)); 
         }
 
         renderData(); 
@@ -43,7 +50,6 @@ const PlacePage = () => {
             const res = await fetch( `http://localhost:3000/api${location.pathname}`, { 
                 method: "delete", 
                 mode: "cors", 
-                body: JSON.stringify(data), 
                 headers: { 
                     "Content-Type": "application/json", 
                 }
@@ -60,7 +66,6 @@ const PlacePage = () => {
     }
     return ( 
         <section className="detail-page page">
-            <pre> { JSON.stringify(typeof city)} </pre>
             <h2> { data.title } </h2>
             <article className="developer">
                 <button onClick={ handleDelete }>Sterge Locatie</button>
@@ -78,7 +83,15 @@ const PlacePage = () => {
                     </>
                 }
 
-                    <NavLink to = { `/cities/${city._id}`}> { city.title }</NavLink> 
+                { databaseCity && 
+                    <>
+                        <p>Oras: <NavLink to = { `/cities/${city._id}`}> { city.title } </NavLink> </p>
+                    </>
+                }
+
+                { !databaseCity && 
+                    <p> Comuna: { city.title } </p>
+                }
 
                 
                     {images.map(image => { 
