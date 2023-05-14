@@ -3,6 +3,6 @@ const PLACES_TYPES = [
      "rezervatie naturala", "muzeu", "lac", 
      "biserica", "parc", "restaurant", "hotel",
      "pensiune", "crama", "atractii diverse", 
-    "casa memoriala", "biblioteca", "cinema", "cabana"];
+    "casa memoriala", "biblioteca", "cinema", "cabana", "centru comercial"];
 
 module.exports = PLACES_TYPES;  
