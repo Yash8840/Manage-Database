@@ -50,7 +50,6 @@ const CityPage = () => {
             const res = await fetch(`http://localhost:3000/api/${location.pathname}`, { 
                 method: "DELETE", 
                 mode: "cors", 
-                body: JSON.stringify(data.city) , 
                 headers: { 
                     "Content-Type": "application/json", 
                 }

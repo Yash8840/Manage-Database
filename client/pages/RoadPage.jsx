@@ -4,16 +4,30 @@ import fetchData from "../helpers/fetchData";
 import { Buffer } from "buffer";
 import generateRandomKey from "../helpers/randomKey";
 import Place from "../components/Place";
+import { useNavigate } from "react-router-dom";
 
 const RoadPage = () => { 
     const location = useLocation(); 
+    const navigate = useNavigate(); 
     {/* res.json({ road: road, roadPlaces }) */}
     const [ road, setRoad ] = useState({}); 
     const [ roadPlaces, setRoadPlaces ] = useState([]); 
     const [ images, setImages ] = useState([]); 
 
-    const handleDelete = () => { 
-        console.log("Sterge traseu"); 
+    const handleDelete = async () => { 
+        const res = await fetch(`http://localhost:3000/api${location.pathname}`, { 
+            method: "delete", 
+            mode: "cors", 
+            headers: { 
+                "Content-Type": "application/json", 
+            }
+         }); 
+
+        if(res.status !== 200) { 
+            return; 
+        }; 
+
+        navigate("/roads"); 
     }
 
     {/* Images */}
@@ -30,16 +44,14 @@ const RoadPage = () => {
 
     useEffect( () => {
         async function renderData () { 
-            const res = await fetchData(`http://localhost:3000/api${location.pathname}`); 
-            console.log(res.road.photo.data); 
+            const res = await fetchData(`http://localhost:3000/api${location.pathname}`);  
             setRoad(res.road); 
             setRoadPlaces(res.roadPlaces); 
             await setImages(formatImages(res.road.photo.data)); 
-
-            console.log(formatImages(res.road.photo.data)); 
         }; 
 
         renderData(); 
+        console.log(`http://localhost:3000/api${location.pathname}`)
      }, []); 
 
 
