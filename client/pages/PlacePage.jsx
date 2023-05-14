@@ -32,7 +32,7 @@ const PlacePage = () => {
                 setCity(res.city[0])
                 setImages(formatImages(res.place.photo.data)); 
             }
-            console.log(res.place); 
+            console.log(res); 
         }
 
         renderData(); 
@@ -60,7 +60,6 @@ const PlacePage = () => {
     }
     return ( 
         <section className="detail-page page">
-            <pre> { JSON.stringify(typeof city)} </pre>
             <h2> { data.title } </h2>
             <article className="developer">
                 <button onClick={ handleDelete }>Sterge Locatie</button>
@@ -78,7 +77,9 @@ const PlacePage = () => {
                     </>
                 }
 
-                    <NavLink to = { `/cities/${city._id}`}> { city.title }</NavLink> 
+                { data.city  && 
+                    <NavLink to = { `/cities/${city._id}`}> { city.title } </NavLink> 
+                }
 
                 
                     {images.map(image => { 

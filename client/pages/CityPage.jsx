@@ -116,7 +116,7 @@ const CityPage = () => {
                                     if(place.type == type) { 
                                         return ( 
                                             <article key = { place._id}>
-                                                <Place id = { place._id} title = { place.title }/>
+                                                <Place id = { place._id} place = { place }/>
                                             </article>
                                         )
                                     }
