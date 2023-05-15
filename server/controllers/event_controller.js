@@ -1,6 +1,8 @@
 const Event = require("../models/event"); 
 const upload = require("../middleware/upload_multer"); 
 const fs = require("fs"); 
+var mongoose = require('mongoose');
+
 
 exports.event_list = async (req, res, next) => { 
     try {  
@@ -34,7 +36,11 @@ exports.create_event_post = (req, res) => {
                 }); 
             }
 
+            console.log(req.body);
+
+
             const placesDocs = req.body.places.split(','); 
+            placesDocs.pop();
             console.log(placesDocs); 
     
             const newEvent = new Event({ 
@@ -42,6 +48,7 @@ exports.create_event_post = (req, res) => {
                 description: req.body.description, 
                 photo: { 
                     data: dataFiles, 
+                    contentType: "image/json", 
                 }, 
                 places: placesDocs, 
             }); 

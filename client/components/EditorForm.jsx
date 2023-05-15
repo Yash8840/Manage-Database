@@ -1,7 +1,9 @@
-import React from "react";
+import React from "react"; 
+import { useForm } from "react-hook-form";
 
 const Editor = (props) => { 
     const { info, onEditInfo } = props;
+
 
     return( 
         <form action="" className="editor-form">
