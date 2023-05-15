@@ -19,6 +19,9 @@ const NavBar = () =>  {
                     <NavLink to = "/roads"> Trasee </NavLink>
                 </li>
                 <li className="navbar-element">
+                    <NavLink to = "/events"> Evenimente </NavLink>
+                </li>
+                <li className="navbar-element">
                     <NavLink to = "/places/create">Creeaza Atractie</NavLink> 
                 </li>
                 <li className="navbar-element">
@@ -26,6 +29,9 @@ const NavBar = () =>  {
                 </li>
                 <li className="navbar-element">
                     <NavLink to = "/roads/create"> Creeaza Traseu </NavLink>
+                </li>
+                <li className="navbar-element">
+                    <NavLink to = "/events/create"> Creeaza Eveniment </NavLink>
                 </li>
             </ul>
         </nav>

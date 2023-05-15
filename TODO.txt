@@ -3,3 +3,6 @@
 - Format Photos With Glider
 - Sistem evenimente(Upcoming events - CRUD) 
 
+- DropDown Menu for create pages
+
+- Lunile exprimate in cuvinte pentru evenimente
