@@ -15,6 +15,7 @@ const CityPage = () => {
     const navigate = useNavigate(); 
     const [ images, setImages] = useState([]); 
     const [successDeleteMessage, setSuccessDeleteMessage] = useState(""); 
+    const [ pageLoaded, setPageLoaded ] = useEffect(false); 
 
     const formatImages = (array) => { 
         const result = []; 
@@ -36,6 +37,7 @@ const CityPage = () => {
                 setData(res.city); 
                 setPlacesData(res.placesInCity);
                 setImages(formatImages(res.city.photo.data)); 
+                setPlaceLoaded(true); 
             } catch(err) { 
                 console.log(err); 
                 console.log("in efect"); 
@@ -70,61 +72,68 @@ const CityPage = () => {
 
     return( 
         <section className="detail-page page">
-            <article className="developer-area">
-                <h2> { data.title } </h2>
-                <button onClick={ handleDelete }> Sterge Oras </button>
-                <p> Daca stergi acest oras, vei sterge toate atractiile ale acestuia. </p>
-                <NavLink to = {{pathname: `/cities/${data._id}/update`}}> Actualizeaza informatii </NavLink>
-            </article>
-            <hr />
-            <article className="informations">
-                <p className="info description"> { data.description } </p>
-
-                { data.components && 
+            { !pageLoaded && 
+                <p className="first"> Loading </p>
+            }
+            { pageLoaded && 
                 <>
-                    <p className="info components"> Urmatoarele sate apartin de acest oras: </p>
-                    <p> { data.components } </p>
-                </>
-                }         
+                    <article className="developer-area">
+                        <h2> { data.title } </h2>
+                        <button onClick={ handleDelete }> Sterge Oras </button>
+                        <p> Daca stergi acest oras, vei sterge toate atractiile ale acestuia. </p>
+                        <NavLink to = {{pathname: `/cities/${data._id}/update`}}> Actualizeaza informatii </NavLink>
+                    </article>
+                    <hr />
+                    <article className="informations">
+                        <p className="info description"> { data.description } </p>
 
-                {images.map(image => { 
-                    return ( 
-                        <img src= { image } alt="X" key={ generateRandomKey(20)} />
-                    )
-                })}
-                       
-                { data.history && 
-                    <>
-                        <p className="info history">Istoria orasului: </p>
-                        <p className="info history"> { data.history } </p>
-                    </>
-                }
+                        { data.components && 
+                        <>
+                            <p className="info components"> Urmatoarele sate apartin de acest oras: </p>
+                            <p> { data.components } </p>
+                        </>
+                        }         
 
-                <hr />
-                    <p className="info population"> Populatie: { data.population } </p>
-                    <p className="info surface"> Suprafata: { data.surface } km ^ 2  </p>
-                <hr />
-
-                <h3>Atractii: </h3>
-                { placeTypes.length > 0 && 
-                    placeTypes.map(type => { 
-                        return ( 
+                        {images.map(image => { 
+                            return ( 
+                                <img src= { image } alt="X" key={ generateRandomKey(20)} />
+                            )
+                        })}
+                            
+                        { data.history && 
                             <>
-                                { placesData.some(t => t.type == type) && <p> { type } </p> }
-                                { placesData.map(place => { 
-                                    if(place.type == type) { 
-                                        return ( 
-                                            <article key = { place._id}>
-                                                <Place id = { place._id} place = { place }/>
-                                            </article>
-                                        )
-                                    }
-                                })}
+                                <p className="info history">Istoria orasului: </p>
+                                <p className="info history"> { data.history } </p>
                             </>
-                        )
-                    })
-                }
-            </article>
+                        }
+
+                        <hr />
+                            <p className="info population"> Populatie: { data.population } </p>
+                            <p className="info surface"> Suprafata: { data.surface } km ^ 2  </p>
+                        <hr />
+
+                        <h3>Atractii: </h3>
+                        { placeTypes.length > 0 && 
+                            placeTypes.map(type => { 
+                                return ( 
+                                    <>
+                                        { placesData.some(t => t.type == type) && <p> { type } </p> }
+                                        { placesData.map(place => { 
+                                            if(place.type == type) { 
+                                                return ( 
+                                                    <article key = { place._id}>
+                                                        <Place id = { place._id} place = { place }/>
+                                                    </article>
+                                                )
+                                            }
+                                        })}
+                                    </>
+                                )
+                            })
+                        }
+                    </article>
+                </>
+            }
         </section>
     )
 };
