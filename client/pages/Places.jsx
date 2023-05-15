@@ -5,6 +5,7 @@ import Place from "../components/Place";
 const Places = () =>  {
     const [ placeKeys, setPlaceKeys ] = useState([]); 
     const [ placeValues, setPlaceValues ] = useState([]); 
+    const [ placeLoaded, setPlaceLoaded ] = useState(false); 
 
     useEffect( () => { 
         const fetchData = async () => { 
@@ -15,6 +16,7 @@ const Places = () =>  {
             const res = await result.json(); 
             setPlaceKeys(Object.keys(res.place)); 
             setPlaceValues(Object.values(res.place)); 
+            setPlaceLoaded(true); 
         }
 
         fetchData (); 
@@ -22,22 +24,29 @@ const Places = () =>  {
 
     return ( 
         <section className="page places-page">
-            { placeKeys.map(type => { 
-                return( 
-                    <>
-                        <h2 key = { generateRandomKey(20)}> { type } </h2>
-                        { placeValues[ placeKeys.indexOf(type)].map(value => { 
-                            return ( 
-                                <article key = { value._id}>
-                                    <Place id = { value._id} place = { value }/>
-                                </article>
-                            ) 
-                        })}
+            { !placeLoaded && 
+                <p className="first"> Loading </p>
+            }
+            { placeLoaded && 
+                <>
+                    { placeKeys.map(type => { 
+                        return( 
+                            <>
+                                <h2 key = { generateRandomKey(20)}> { type } </h2>
+                                { placeValues[ placeKeys.indexOf(type)].map(value => { 
+                                    return ( 
+                                        <article key = { value._id}>
+                                            <Place id = { value._id} place = { value }/>
+                                        </article>
+                                    ) 
+                                })}
 
-                        <hr />
-                    </>
-                )
-            })}
+                                <hr />
+                            </>
+                        )
+                    })}
+                </>
+            }
         </section>
     )
 }; 
