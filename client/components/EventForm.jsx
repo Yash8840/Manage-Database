@@ -9,6 +9,8 @@ const EventForm = () => {
     const [ description, setDescription ] = useState(""); 
     const [ images, setImages ] = useState([]); 
     const [ placesId, setPlacesId ] = useState(''); 
+    const [ startDate, setStartDate ] = useState(''); 
+    const [ stopDate, setStopDate ] = useState(''); 
 
     const [ showPlacesPage, setShowPlacesPage ] = useState(false);  
     const [ selectedPlaces, setSelectedPlaces ] = useState([]); 
@@ -33,12 +35,12 @@ const EventForm = () => {
         setShowPlacesPage(false); 
     }
     
-
-    
     const submitForm = async () => { 
         const formData = { 
             title, 
             description, 
+            startDate: new Date(startDate), 
+            stopDate: new Date(stopDate), 
             places: placesId,  
             photo: images, 
         }
@@ -60,7 +62,9 @@ const EventForm = () => {
     const testFormData = () => { 
         const formData = { 
             title, 
-            description, 
+            description,
+            startDate: new Date(startDate), 
+            stopDate: new Date(stopDate),  
             places: placesId,  
             photo: images, 
         }; 
@@ -82,6 +86,18 @@ const EventForm = () => {
                     <label htmlFor="description"> Descrierea evenimentului</label>
                     <textarea cols = "30" rows = "10" { ...register("description", { required: "required field" })} type="text" name = "description"
                         onChange =  { e => setDescription (e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="startDate"> Data si ora inceperii evenimentului: </label>
+                    <input {...register("startDate") } type="datetime-local" name = "startDate"
+                        onChange = { e => setStartDate(e.target.value)} />
+                </div>
+
+                <div className = "form-group">
+                    <label htmlFor="stopDate"> Data si ora sfarsitului evenimentului </label>
+                    <input {...register("stopDate")} type="datetime-local" name = "stopDate"
+                        onChange = { e => setStopDate(e.target.value)  } />
                 </div>
 
                 <div className="form-group">

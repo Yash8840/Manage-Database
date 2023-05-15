@@ -5,12 +5,13 @@ const { DateTime } = require("luxon");
 const EventSchema = new Schema({ 
     title: { type: String, minLength: 1, required: true }, 
     description: { type: String, minLength: 1, required: true }, 
-    startDate: { type: Date, default: Date.now }, 
+    startDate: { type: Date }, 
+    stopDate: { type: Date }, 
     photo: { 
         data: [ Buffer ], 
         contentType: String,  
     }, 
-    places:  [ { type: Schema.Types.ObjectId } ] 
+    places:  [ { type: Schema.Types.ObjectId, ref: "Place" } ] 
 }); 
 
 EventSchema.virtual("startDate_formatted").get(function () { 

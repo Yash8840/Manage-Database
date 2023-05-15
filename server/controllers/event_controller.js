@@ -16,7 +16,9 @@ exports.event_list = async (req, res, next) => {
 exports.event_detail = async (req, res) => { 
     try { 
         const event = await Event.findById(req.params.id)
-            .populate("places"); 
+            .populate("places").exec(); 
+
+        console.log(event.places); 
         res.status(200).json({ event }); 
     } catch(err) { 
         console.log(err); 
@@ -39,9 +41,13 @@ exports.create_event_post = (req, res) => {
             console.log(req.body);
 
 
-            const placesDocs = req.body.places.split(','); 
-            placesDocs.pop();
-            console.log(placesDocs); 
+            req.body.places = req.body.places.split(','); 
+            req.body.places.pop(); 
+            let placesDocs = [];
+            
+            for(let i = 0; i < req.body.places.length; i++) { 
+                placesDocs.push(new mongoose.Types.ObjectId(`${req.body.places[i]}`)); 
+            }
     
             const newEvent = new Event({ 
                 title: req.body.title, 
@@ -53,6 +59,14 @@ exports.create_event_post = (req, res) => {
                 places: placesDocs, 
             }); 
 
+            if(req.body.startDate) { 
+                newEvent.startDate = req.body.startDate; 
+            }; 
+
+            if(req.body.stopDate) { 
+                newEvent.stopDate = req.body.stopDate; 
+            }
+
             await newEvent.save(); 
             res.status(200).json({ event: newEvent, successfull_message: "Event added successfully"}); 
         }
@@ -63,8 +77,16 @@ exports.create_event_get = (req, res) => {
     res.send("create event get"); 
 }; 
 
-exports.delete_event = (req, res) => { 
-    res.send("delete event"); 
+exports.delete_event = async (req, res) => { 
+    try { 
+        const event = await Event.findById(req.params.id); 
+        if(event) { 
+            await Event.findByIdAndDelete(req.params.id); 
+            res.status(200).json({ delete_message: "event deleted"}); 
+        }
+    } catch(err) { 
+        console.log(err); 
+    }
 }; 
 
 exports.update_event_get = (req, res) => { 
