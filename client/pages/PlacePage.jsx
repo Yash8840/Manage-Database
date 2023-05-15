@@ -13,6 +13,7 @@ const PlacePage = () => {
     const [ city, setCity ] = useState({}); 
     const [ images, setImages ] = useState([]); 
     const [ databaseCity, setDatabaseCity ] = useState(false); 
+    const [ pageLoaded, setPageLoaded ] = useState(false);
 
     const formatImages = (array) => { 
         const result = []; 
@@ -40,6 +41,7 @@ const PlacePage = () => {
             }
 
             setImages(formatImages(res.place.photo.data)); 
+            setPageLoaded(true); 
         }
 
         renderData(); 
@@ -66,6 +68,11 @@ const PlacePage = () => {
     }
     return ( 
         <section className="detail-page page">
+            { !pageLoaded && 
+                <p className="first">
+                    Loading
+                </p>
+            }
             <h2> { data.title } </h2>
             <article className="developer">
                 <button onClick={ handleDelete }>Sterge Locatie</button>

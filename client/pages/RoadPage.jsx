@@ -13,6 +13,7 @@ const RoadPage = () => {
     const [ road, setRoad ] = useState({}); 
     const [ roadPlaces, setRoadPlaces ] = useState([]); 
     const [ images, setImages ] = useState([]); 
+    const [ pageLoaded, setPageLoaded ] = useState(false); 
 
     const handleDelete = async () => { 
         const res = await fetch(`http://localhost:3000/api${location.pathname}`, { 
@@ -48,6 +49,7 @@ const RoadPage = () => {
             setRoad(res.road); 
             setRoadPlaces(res.roadPlaces); 
             await setImages(formatImages(res.road.photo.data)); 
+            setPageLoaded(true); 
         }; 
 
         renderData(); 
@@ -57,23 +59,30 @@ const RoadPage = () => {
 
     return ( 
         <section className="road-page page">
-            <h1> { road.title }</h1>
-            { images.map(image => { 
-                return( 
-                    <img src= { image } width = "500px" height= "300px" alt="X" key = { generateRandomKey(20)} />
-                )
-            })}
-            <h2> { road.description } </h2>
+            { !pageLoaded && 
+                <p className="first"> Loading </p>
+            }
+            { pageLoaded && 
+                <>
+                    <h1> { road.title }</h1>
+                    { images.map(image => { 
+                        return( 
+                            <img src= { image } width = "500px" height= "300px" alt="X" key = { generateRandomKey(20)} />
+                        )
+                    })}
+                    <h2> { road.description } </h2>
 
-            <button onClick = { handleDelete }> Sterge Traseul </button>
+                    <button onClick = { handleDelete }> Sterge Traseul </button>
 
-            <hr />
-            <p> Vezi atractiile pe care urmeaza sa le vizitezi: </p>
-            { roadPlaces.map(place => { 
-                return( 
-                    <Place key = { place._id } id = { place._id } place = { place } /> 
-                )
-            })}
+                    <hr />
+                    <p> Vezi atractiile pe care urmeaza sa le vizitezi: </p>
+                    { roadPlaces.map(place => { 
+                        return( 
+                            <Place key = { place._id } id = { place._id } place = { place } /> 
+                        )
+                    })}
+                </>
+            }
         </section>
     )
 }; 

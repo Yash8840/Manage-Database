@@ -15,6 +15,7 @@ const EventPage = () => {
     const [ places, setPlaces ] = useState([]);  
     const [ startDate, setStartDate ] = useState(''); 
     const [ stopDate, setStopDate ] = useState(''); 
+    const [ pageLoaded, setPageLoaded ] = useState(false); 
 
     const handleDelete = async () => { 
         const res = await fetch(`http://localhost:3000/api${location.pathname}`, { 
@@ -55,31 +56,40 @@ const EventPage = () => {
             setStopDate(new Date(`${res.event.stopDate}`).toLocaleDateString('en-GB', { 
                 day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit"
             })); 
+
+            setPageLoaded(true); 
         }; 
 
         renderData (); 
     }, [])
     return( 
         <section className="event-page page">
-            <h1> { event.title } </h1>
-            <article className = "button-holder"> 
-                <button onClick = { handleDelete }> Sterge Eveniment </button>
-                <p> Data sustinerii evenimentului: { startDate } </p>
-                <p> Data sfarsitului evenimentului: { stopDate } </p>
-            </article>
-            { images.map(image => { 
-                return ( 
-                    <img src= { image } key = { generateRandomKey(20)} alt=" X " />
-                )
-            })}
-            <p> { event.description } </p>
+            { !pageLoaded && 
+                <p className="first">Loading</p>
+            }
+            { pageLoaded && 
+                <>
+                    <h1> { event.title } </h1>
+                    <article className = "button-holder"> 
+                        <button onClick = { handleDelete }> Sterge Eveniment </button>
+                        <p> Data sustinerii evenimentului: { startDate } </p>
+                        <p> Data sfarsitului evenimentului: { stopDate } </p>
+                    </article>
+                    { images.map(image => { 
+                        return ( 
+                            <img src= { image } key = { generateRandomKey(20)} alt=" X " />
+                        )
+                    })}
+                    <p> { event.description } </p>
 
-            <hr />
-            { places.length > 0 && places.map(place => { 
-                return ( 
-                    <Place key = { place._id } id = { place._id } place = { place } /> 
-                )
-            })}
+                    <hr />
+                    { places.length > 0 && places.map(place => { 
+                        return ( 
+                            <Place key = { place._id } id = { place._id } place = { place } /> 
+                        )
+                    })}
+                </>
+            }
 
         </section>
     )

@@ -15,7 +15,7 @@ const CityPage = () => {
     const navigate = useNavigate(); 
     const [ images, setImages] = useState([]); 
     const [successDeleteMessage, setSuccessDeleteMessage] = useState(""); 
-    const [ pageLoaded, setPageLoaded ] = useEffect(false); 
+    const [ pageLoaded, setPageLoaded ] = useState(false); 
 
     const formatImages = (array) => { 
         const result = []; 
@@ -37,7 +37,7 @@ const CityPage = () => {
                 setData(res.city); 
                 setPlacesData(res.placesInCity);
                 setImages(formatImages(res.city.photo.data)); 
-                setPlaceLoaded(true); 
+                setPageLoaded(true); 
             } catch(err) { 
                 console.log(err); 
                 console.log("in efect"); 
