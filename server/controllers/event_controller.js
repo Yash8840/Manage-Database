@@ -15,7 +15,7 @@ exports.event_list = async (req, res, next) => {
 
 exports.event_detail = async (req, res) => { 
     try { 
-        const event = await Event.find(req.params.id)
+        const event = await Event.findById(req.params.id)
             .populate("places"); 
         res.status(200).json({ event }); 
     } catch(err) { 
