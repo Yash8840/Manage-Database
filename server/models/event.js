@@ -8,12 +8,12 @@ const EventSchema = new Schema({
     startDate: { type: Date, default: Date.now }, 
     photo: { 
         data: [ Buffer ], 
-        contentType: "image/json", 
+        contentType: String,  
     }, 
-    places: { type: Schema.Types.ObjectId }
+    places:  [ { type: Schema.Types.ObjectId } ] 
 }); 
 
-EventSchema.get("startDate_formatted").get(function () { 
+EventSchema.virtual("startDate_formatted").get(function () { 
     return DateTime.fromJSDate(this.sendDate).toLocaleString(DateTime.DATETIME_MED); 
 }); 
 

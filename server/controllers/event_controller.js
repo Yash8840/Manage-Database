@@ -1,5 +1,6 @@
 const Event = require("../models/event"); 
 const upload = require("../middleware/upload_multer"); 
+const fs = require("fs"); 
 
 exports.event_list = async (req, res, next) => { 
     try {  
@@ -22,10 +23,8 @@ exports.event_detail = async (req, res) => {
 
 exports.create_event_post = (req, res) => { 
     upload(req, res, async(err) => { 
-        if(err) { 
-            console.log(err); 
-            console.log(res.body); 
-            console.log(res.files);  
+        if(err) {  
+            console.log(res.body);  
         } else { 
             const dataFiles = []; 
             if(req.files) { 
@@ -35,13 +34,15 @@ exports.create_event_post = (req, res) => {
                 }); 
             }
 
-            const placesDocs = req.body.places.split(","); 
+            const placesDocs = req.body.places.split(','); 
             console.log(placesDocs); 
     
             const newEvent = new Event({ 
                 title: req.body.title, 
                 description: req.body.description, 
-                photo: dataFiles, 
+                photo: { 
+                    data: dataFiles, 
+                }, 
                 places: placesDocs, 
             }); 
 
