@@ -1,11 +1,22 @@
 import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
+import HamburgerMenu from "./HamburgerMenu";
+import burgerMenuPicture  from "../css/burgerMenu.png"
 
 const NavBar = () =>  { 
+    const [hamburgerOpen,setHamburger]= useState(false);
+    const togHamburger = ()=>{
+         setHamburger(!hamburgerOpen)
+         console.log(hamburgerOpen)
+    }
+  
+    useEffect(() => {
+      }, [hamburgerOpen]);
     return( 
+        <>
         <nav className="navbar">
             <ul className="navbar-ul">
-                <h1> Creeaza </h1>
+                <h1>Creaza CV</h1>
                 <li className="navbar-element">
                     <NavLink to ="/"> Acasa </NavLink>
                 </li>
@@ -20,21 +31,16 @@ const NavBar = () =>  {
                 </li>
                 <li className="navbar-element">
                     <NavLink to = "/events"> Evenimente </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/places/create">Creeaza Atractie</NavLink> 
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/cities/create"> Creeaza Oras </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/roads/create"> Creeaza Traseu </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/events/create"> Creeaza Eveniment </NavLink>
-                </li>
+                </li>               
+                
+                 <div className="hamburgerMenu-btn" onClick={togHamburger}>
+                    <img src={burgerMenuPicture}  alt="menuIcon"  ></img>
+                <HamburgerMenu isOpen ={hamburgerOpen}/>      
+            </div>
+ 
             </ul>
         </nav>
+        </>
     )
 }; 
 
