@@ -15,30 +15,20 @@ const NavBar = () =>  {
     return( 
         <>
         <nav className="navbar">
-            <ul className="navbar-ul">
+            <div className="navbar-ul">
                 <h1>Creaza CV</h1>
-                <li className="navbar-element">
-                    <NavLink to ="/"> Acasa </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/cities"> Orase </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/places"> Atractii </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/roads"> Trasee </NavLink>
-                </li>
-                <li className="navbar-element">
-                    <NavLink to = "/events"> Evenimente </NavLink>
-                </li>               
-                
-                 <div className="hamburgerMenu-btn" onClick={togHamburger}>
+                <NavLink className="navbar-element" to ="/"> Acasa </NavLink>
+                <NavLink className="navbar-element" to = "/cities"> Orase </NavLink>
+                <NavLink className="navbar-element" to = "/places"> Atractii </NavLink>
+                <NavLink  className="navbar-element" to = "/roads"> Trasee </NavLink>
+                <NavLink className="navbar-element" to = "/events"> Evenimente </NavLink>      
+                 
+            <div className="hamburgerMenu-btn" onClick={togHamburger}>
                     <img src={burgerMenuPicture}  alt="menuIcon"  ></img>
                 <HamburgerMenu isOpen ={hamburgerOpen}/>      
             </div>
  
-            </ul>
+            </div>
         </nav>
         </>
     )
