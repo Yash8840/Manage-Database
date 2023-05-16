@@ -1,3 +1,4 @@
+
 * { 
     padding: 0; 
     margin: 0; 
@@ -5,16 +6,18 @@
 } 
 
 /* Mains */
-body {
+body,html {
     font-family: 'Roboto', sans-serif;;
+    width: 100%;
+
 } 
 
 /* NavBar stiling */
 
 .navbar-ul { 
-    width: 100vw; 
+    width: 100%; 
     display: flex; 
-
+    margin-left: auto;
     background-color: #293241;
 }
 
@@ -44,7 +47,47 @@ body {
 }
 
 .navbar-element a { 
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white; 
+    font-weight: 900;
+    
+}
+/* Burger Menu */
+.hamburgerMenuList{
+    flex-direction: column;
+    gap: 0.2rem;
+    position:  absolute;
+    right: 0%;
+    top:3.4rem;
+    padding: 0.5rem;
+    background-color: #293241;
+}
+.hamburgerMenu-btn{
+    display:  flex;  
+    justify-content: center;
+    width: 5%;
+    padding: 0.1rem;
+    
+}
+.hamburgerMenu-btn:hover{
+    background-color: #98C1D9;
+    border-radius: 14p
+}
+.navbar-burgerLink{ 
     text-decoration: none;
     color: white; 
     font-weight: 900;
 }
+.navbar-burgerLink:hover  {
+    color: #293241; 
+}
+/*
+.hamburgerMenu-btn button {
+    margin: auto auto;
+    margin-top: auto;
+    width: 45%;
+    height: 45%;
+} 
+*/
