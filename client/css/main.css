@@ -13,7 +13,10 @@ body,html {
 } 
 
 /* NavBar stiling */
-
+nav{
+    display:flex;
+    gap: 1rem;
+}
 .navbar-ul { 
     width: 100%; 
     display: flex; 
@@ -30,6 +33,9 @@ body,html {
     list-style-type: none;
     display: grid; 
     place-content: center;
+    text-decoration: none;
+    color: white; 
+    font-weight: 900;
     width: 12vw; 
 }
 
@@ -74,11 +80,6 @@ body,html {
 .hamburgerMenu-btn:hover{
     background-color: #98C1D9;
     border-radius: 14p
-}
-.navbar-burgerLink{ 
-    text-decoration: none;
-    color: white; 
-    font-weight: 900;
 }
 .navbar-burgerLink:hover  {
     color: #293241; 
