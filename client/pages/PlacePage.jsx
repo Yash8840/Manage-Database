@@ -73,53 +73,57 @@ const PlacePage = () => {
                     Loading
                 </p>
             }
-            <h2> { data.title } </h2>
-            <article className="developer">
-                <button onClick={ handleDelete }>Sterge Locatie</button>
-                <NavLink to = {{ pathname: `/places/${data._id}/update`}}>Actualizeaza atractie</NavLink>
-            </article>
+            { pageLoaded && 
+                <>
+                    <h2> { data.title } </h2>
+                    <article className="developer">
+                        <button onClick={ handleDelete }>Sterge Locatie</button>
+                        <NavLink to = {{ pathname: `/places/${data._id}/update`}}>Actualizeaza atractie</NavLink>
+                    </article>
 
-            <article className="informations">
-                <p className="description"> { data.description } </p>
-                <p className="type">Tipul atractiei: { data.type } </p>
+                    <article className="informations">
+                        <p className="description"> { data.description } </p>
+                        <p className="type">Tipul atractiei: { data.type } </p>
 
-                { data.history && 
-                    <>
-                        <p className="info hostory"> Istorie: </p>
-                        <p className="info history"> { data.history } </p>
-                    </>
-                }
+                        { data.history && 
+                            <>
+                                <p className="info hostory"> Istorie: </p>
+                                <p className="info history"> { data.history } </p>
+                            </>
+                        }
 
-                { databaseCity && 
-                    <>
-                        <p>Oras: <NavLink to = { `/cities/${city._id}`}> { city.title } </NavLink> </p>
-                    </>
-                }
+                        { databaseCity && 
+                            <>
+                                <p>Oras: <NavLink to = { `/cities/${city._id}`}> { city.title } </NavLink> </p>
+                            </>
+                        }
 
-                { !databaseCity && 
-                    <p> Comuna: { city.title } </p>
-                }
+                        { !databaseCity && 
+                            <p> Comuna: { city.title } </p>
+                        }
 
-                
-                    {images.map(image => { 
-                        return ( 
-                            <img src= { image } alt="X" key={ generateRandomKey(20)} />
-                        )
-                    })}
+                        
+                            {images.map(image => { 
+                                return ( 
+                                    <img src= { image } alt="X" key={ generateRandomKey(20)} />
+                                )
+                            })}
 
-                { data.program && 
-                    <p className="info program"> PROGRAM: { data.program } </p>
-                }
-                <hr />
-                { data.contact && 
-                    <p className="info contact">Contact: { data.contact } </p>
-                }
+                        { data.program && 
+                            <p className="info program"> PROGRAM: { data.program } </p>
+                        }
+                        <hr />
+                        { data.contact && 
+                            <p className="info contact">Contact: { data.contact } </p>
+                        }
 
-                { data.adress && 
-                    <p className="info adress">Adresa: { data.adress } </p>
-                }
-            </article>
+                        { data.adress && 
+                            <p className="info adress">Adresa: { data.adress } </p>
+                        }
+                    </article>
 
+                </>
+            }
         </section>
     )
 }

@@ -19,8 +19,8 @@ exports.road_detail = async (req, res, next) => {
             .exec(); 
 
         res.status(200).json({ road: road, roadPlaces: road.places });  
-    } catch { 
-
+    } catch (err){ 
+        console.log(err); 
     }
 }; 
 
